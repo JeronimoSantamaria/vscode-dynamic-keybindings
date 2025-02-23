@@ -11,3 +11,7 @@ With Dynamic Keybindings, you will be able to:
 The extension will focus on flexibility and user customization, offering an easy configuration process to match your unique workflow. In the future, additional features such as profile import/export, advanced configuration options, and community-driven enhancements will be integrated.
 
 Dynamic Keybindings is designed to transform your VS Code environment into a personalized productivity powerhouse. Stay tuned for updates and further improvements as this project evolves to meet the dynamic needs of modern development.
+
+---
+
+This project is developed with comprehensive documentation of the software development life cycle and an agile approach. While this documentation is private, it is available upon request for professional purposes.
