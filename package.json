@@ -14,6 +14,76 @@
       {
         "key": "ctrl+.",
         "command": "workbench.action.showCommands"
+      },
+      {
+        "key": "1",
+        "command": "type",
+        "args": {
+          "text": "!"
+        }
+      },
+      {
+        "key": "2",
+        "command": "type",
+        "args": {
+          "text": "\""
+        }
+      },
+      {
+        "key": "3",
+        "command": "type",
+        "args": {
+          "text": "#"
+        }
+      },
+      {
+        "key": "4",
+        "command": "type",
+        "args": {
+          "text": "$"
+        }
+      },
+      {
+        "key": "5",
+        "command": "type",
+        "args": {
+          "text": "%"
+        }
+      },
+      {
+        "key": "6",
+        "command": "type",
+        "args": {
+          "text": "&"
+        }
+      },
+      {
+        "key": "7",
+        "command": "type",
+        "args": {
+          "text": "/"
+        }
+      },
+      {
+        "key": "8",
+        "command": "type",
+        "args": {
+          "text": "("
+        }
+      },
+      {
+        "key": "9",
+        "command": "type",
+        "args": {
+          "text": ")"
+        }
+      },
+      {
+        "key": "0",
+        "command": "type",
+        "args": {
+          "text": "="
+        }
       }
     ]
   }
