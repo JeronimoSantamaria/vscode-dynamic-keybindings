@@ -5,8 +5,8 @@ Dynamic Keybindings is a future extension for Visual Studio Code that will empow
 With Dynamic Keybindings, you will be able to:
 - **Create Multiple Profiles:** Define various keybinding sets tailored to different projects or coding tasks.
 - **Seamlessly Switch Contexts:** Activate or deactivate profiles on the fly, ensuring that the most relevant shortcuts are always available.
-- **Integrate with VS Code's Ecosystem:** Leverage the native keybinding system of VS Code for a smooth and intuitive user experience.
 - **Enhance Productivity:** Reduce repetitive keystrokes and streamline your development process by personalizing your workspace.
+- **Enhace Pair Programming** Allows two users to work on the same device with different profiles.
 
 The extension will focus on flexibility and user customization, offering an easy configuration process to match your unique workflow. In the future, additional features such as profile import/export, advanced configuration options, and community-driven enhancements will be integrated.
 
