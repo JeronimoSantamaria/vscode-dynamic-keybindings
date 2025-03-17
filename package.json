@@ -107,8 +107,5 @@
       }
     ]
   },
-  "activationEvents": [
-    "onCommand:dynamic-keybindings.toggle"
-  ],
   "main": "./src/extension.js"
 }
