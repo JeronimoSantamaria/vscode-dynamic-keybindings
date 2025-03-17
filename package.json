@@ -22,6 +22,10 @@
         "command": "workbench.action.showCommands"
       },
       {
+        "key": "ctrl+k",
+        "command": "dynamic-keybindings.toggle"
+      },
+      {
         "key": "1",
         "command": "type",
         "args": {
