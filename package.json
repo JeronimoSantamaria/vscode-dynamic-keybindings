@@ -10,6 +10,12 @@
     "Keymaps"
   ],
   "contributes": {
+    "commands": [
+      {
+        "command": "dynamic-keybindings.toggle",
+        "title": "Toggle Dynamic Keybindings"
+      }
+    ],
     "keybindings": [
       {
         "key": "ctrl+.",
@@ -20,71 +26,85 @@
         "command": "type",
         "args": {
           "text": "!"
-        }
+        },
+        "when": "dynamicKeybindingsEnabled"
       },
       {
         "key": "2",
         "command": "type",
         "args": {
           "text": "\""
-        }
+        },
+        "when": "dynamicKeybindingsEnabled"
       },
       {
         "key": "3",
         "command": "type",
         "args": {
           "text": "#"
-        }
+        },
+        "when": "dynamicKeybindingsEnabled"
       },
       {
         "key": "4",
         "command": "type",
         "args": {
           "text": "$"
-        }
+        },
+        "when": "dynamicKeybindingsEnabled"
       },
       {
         "key": "5",
         "command": "type",
         "args": {
           "text": "%"
-        }
+        },
+        "when": "dynamicKeybindingsEnabled"
       },
       {
         "key": "6",
         "command": "type",
         "args": {
           "text": "&"
-        }
+        },
+        "when": "dynamicKeybindingsEnabled"
       },
       {
         "key": "7",
         "command": "type",
         "args": {
           "text": "/"
-        }
+        },
+        "when": "dynamicKeybindingsEnabled"
       },
       {
         "key": "8",
         "command": "type",
         "args": {
           "text": "("
-        }
+        },
+        "when": "dynamicKeybindingsEnabled"
       },
       {
         "key": "9",
         "command": "type",
         "args": {
           "text": ")"
-        }
+        },
+        "when": "dynamicKeybindingsEnabled"
       },
       {
         "key": "0",
         "command": "type",
         "args": {
           "text": "="
-        }
+        },
+        "when": "dynamicKeybindingsEnabled"
       }
     ]
-  }
+  },
+  "activationEvents": [
+    "onCommand:dynamic-keybindings.toggle"
+  ],
+  "main": "./src/extension.js"
 }
