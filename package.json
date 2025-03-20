@@ -14,6 +14,14 @@
       {
         "command": "dynamic-keybindings.toggle",
         "title": "Toggle Dynamic Keybindings"
+      },
+      {
+        "command": "dynamic-keybindings.profile1",
+        "title": "Activate Profile 1"
+      },
+      {
+        "command": "dynamic-keybindings.profile2",
+        "title": "Activate Profile 2"
       }
     ],
     "keybindings": [
@@ -26,12 +34,20 @@
         "command": "dynamic-keybindings.toggle"
       },
       {
+        "key": "ctrl+1",
+        "command": "dynamic-keybindings.profile1"
+      },
+      {
+        "key": "ctrl+2",
+        "command": "dynamic-keybindings.profile2"
+      },
+      {
         "key": "1",
         "command": "type",
         "args": {
           "text": "!"
         },
-        "when": "dynamicKeybindingsEnabled"
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile1'"
       },
       {
         "key": "2",
@@ -39,7 +55,7 @@
         "args": {
           "text": "\""
         },
-        "when": "dynamicKeybindingsEnabled"
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile1'"
       },
       {
         "key": "3",
@@ -47,7 +63,7 @@
         "args": {
           "text": "#"
         },
-        "when": "dynamicKeybindingsEnabled"
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile1'"
       },
       {
         "key": "4",
@@ -55,7 +71,7 @@
         "args": {
           "text": "$"
         },
-        "when": "dynamicKeybindingsEnabled"
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile1'"
       },
       {
         "key": "5",
@@ -63,7 +79,7 @@
         "args": {
           "text": "%"
         },
-        "when": "dynamicKeybindingsEnabled"
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile1'"
       },
       {
         "key": "6",
@@ -71,7 +87,7 @@
         "args": {
           "text": "&"
         },
-        "when": "dynamicKeybindingsEnabled"
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile2'"
       },
       {
         "key": "7",
@@ -79,7 +95,7 @@
         "args": {
           "text": "/"
         },
-        "when": "dynamicKeybindingsEnabled"
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile2'"
       },
       {
         "key": "8",
@@ -87,7 +103,7 @@
         "args": {
           "text": "("
         },
-        "when": "dynamicKeybindingsEnabled"
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile2'"
       },
       {
         "key": "9",
@@ -95,7 +111,7 @@
         "args": {
           "text": ")"
         },
-        "when": "dynamicKeybindingsEnabled"
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile2'"
       },
       {
         "key": "0",
@@ -103,7 +119,7 @@
         "args": {
           "text": "="
         },
-        "when": "dynamicKeybindingsEnabled"
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile2'"
       }
     ]
   },
