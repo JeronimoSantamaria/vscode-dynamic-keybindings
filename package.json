@@ -22,6 +22,10 @@
       {
         "command": "dynamic-keybindings.profile2",
         "title": "Activate Profile 2"
+      },
+      {
+        "command": "extension.createKeybinding",
+        "title": "Create Keybinding"
       }
     ],
     "keybindings": [
@@ -123,5 +127,5 @@
       }
     ]
   },
-  "main": "./src/extension.js"
+  "main": "./Test_Keybinding_creation/createKeybinding.js"
 }
