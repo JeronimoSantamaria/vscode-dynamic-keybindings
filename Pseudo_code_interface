@@ -1,0 +1,21 @@
+# Pseudo code for the creation of the Interface, this first version is just to add the creation of keybindings
+
+template = "{
+                "key": "CONSTANT(REDIRECTED_KEY)", 
+                "command": "type",
+                "args": {
+                  "text": "CONSTANT(DESTINATION_TEXT)"
+                },
+                "when": "dynamicKeybindingsEnabled && activeProfile == 'CONSTANT(ACTIVE_PROFILE_PARAMETER)'"
+            },
+
+display.button "Create a new keybinding +" 
+    """
+    The code is meant to wait for the user to click the button, then, create in the file new lines of code
+    those lines are the ones of the template, but before defining the keybinding, the interface will ask to the user for the 
+    constants, these are meant to be defined once and never be changed again (they can be erased but not changed). 
+    After defining the constants, the code will be added to the file of keybindings 
+    """
+    if user_click;
+        AskToUserFor(CONSTANT(REDIRECTED_KEY), CONSTANT(DESTINATION_TEXT), ACTIVE_PROFILE_PARAMETER)
+        write(tamplate)
