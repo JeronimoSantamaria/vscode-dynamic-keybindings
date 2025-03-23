@@ -4,9 +4,10 @@ const path = require('path');
 
 function activate(context) {
     let disposable = vscode.commands.registerCommand('extension.createKeybinding', async function () {
-        const redirectedKey = await vscode.window.showInputBox({ prompt: 'Enter the redirected key' });
-        const destinationText = await vscode.window.showInputBox({ prompt: 'Enter the destination text' });
-        const activeProfileParameter = await vscode.window.showInputBox({ prompt: 'Enter the active profile parameter' });
+        const config = vscode.workspace.getConfiguration('dynamicKeybindings');
+        const redirectedKey = config.get('redirectedKey');
+        const destinationText = config.get('destinationText');
+        const activeProfileParameter = config.get('activeProfileParameter');
 
         if (redirectedKey && destinationText && activeProfileParameter) {
             const template = `{

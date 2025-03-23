@@ -125,7 +125,28 @@
         },
         "when": "dynamicKeybindingsEnabled && activeProfile == 'profile2'"
       }
-    ]
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Dynamic Keybindings",
+      "properties": {
+        "dynamicKeybindings.redirectedKey": {
+          "type": "string",
+          "default": "",
+          "description": "Enter the redirected key"
+        },
+        "dynamicKeybindings.destinationText": {
+          "type": "string",
+          "default": "",
+          "description": "Enter the destination text"
+        },
+        "dynamicKeybindings.activeProfileParameter": {
+          "type": "string",
+          "default": "",
+          "description": "Enter the active profile parameter"
+        }
+      }
+    }
   },
   "main": "./Test_Keybinding_creation/createKeybinding.js"
 }
