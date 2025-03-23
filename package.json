@@ -22,14 +22,6 @@
       {
         "command": "dynamic-keybindings.profile2",
         "title": "Activate Profile 2"
-      },
-      {
-        "command": "dynamic-keybindings.displayProfiles",
-        "title": "Display Profiles"
-      },
-      {
-        "command": "dynamic-keybindings.addKeybinding",
-        "title": "Add Keybinding"
       }
     ],
     "keybindings": [
@@ -129,57 +121,7 @@
         },
         "when": "dynamicKeybindingsEnabled && activeProfile == 'profile2'"
       }
-    ],
-    "configuration": {
-      "type": "object",
-      "title": "Dynamic Keybindings",
-      "properties": {
-        "dynamic-keybindings.profiles": {
-          "type": "array",
-          "description": "List of keybinding profiles",
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "Profile name"
-              },
-              "keybindings": {
-                "type": "array",
-                "description": "List of keybindings",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "key": {
-                      "type": "string",
-                      "description": "Key combination"
-                    },
-                    "command": {
-                      "type": "string",
-                      "description": "Command to execute"
-                    },
-                    "args": {
-                      "type": "object",
-                      "description": "Arguments for the command"
-                    },
-                    "when": {
-                      "type": "string",
-                      "description": "Condition when the keybinding is active"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "dynamic-keybindings.profileDisplay": {
-          "type": "string",
-          "description": "Display of profiles and keybindings",
-          "default": "",
-          "markdownDescription": "Displays the profiles and their keybindings in the following format:\n\nProfile1:\n- Key \"1\" => \"!\"\n- Key \"2\" => \"@\"\n\nProfile2:\n- Key \"3\" => \"#\"\n- Key \"4\" => \"$\""
-        }
-      }
-    }
+    ]
   },
   "main": "./src/extension.js"
 }
