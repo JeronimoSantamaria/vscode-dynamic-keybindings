@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.5.0] - 2025-03-20
+### Changed
+- Integration with native VS code UI to VS code Webview due to API limitations
+
+## [0.4.0] - 2025-03-20
+### Added
+- Basic interactions inside the native VS Code UI 
+- Possibillity to create keybindings without interacting with the code
+
 ## [0.3.1] - 2025-03-20
 ### Added
 - Added extension status display to the Visual Studio Code status bar.
