@@ -26,6 +26,10 @@
       {
         "command": "extension.createKeybinding",
         "title": "Create Keybinding"
+      },
+      {
+        "command": "dynamic-keybindings.openWebview",
+        "title": "Open Dynamic Keybindings Webview"
       }
     ],
     "keybindings": [
@@ -59,94 +63,9 @@
         "args": {
           "text": "\""
         },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile1'"
-      },
-      {
-        "key": "3",
-        "command": "type",
-        "args": {
-          "text": "#"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile1'"
-      },
-      {
-        "key": "4",
-        "command": "type",
-        "args": {
-          "text": "$"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile1'"
-      },
-      {
-        "key": "5",
-        "command": "type",
-        "args": {
-          "text": "%"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile1'"
-      },
-      {
-        "key": "6",
-        "command": "type",
-        "args": {
-          "text": "&"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile2'"
-      },
-      {
-        "key": "7",
-        "command": "type",
-        "args": {
-          "text": "/"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile2'"
-      },
-      {
-        "key": "8",
-        "command": "type",
-        "args": {
-          "text": "("
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile2'"
-      },
-      {
-        "key": "9",
-        "command": "type",
-        "args": {
-          "text": ")"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile2'"
-      },
-      {
-        "key": "0",
-        "command": "type",
-        "args": {
-          "text": "="
-        },
         "when": "dynamicKeybindingsEnabled && activeProfile == 'profile2'"
       }
-    ],
-    "configuration": {
-      "type": "object",
-      "title": "Dynamic Keybindings",
-      "properties": {
-        "dynamicKeybindings.redirectedKey": {
-          "type": "string",
-          "default": "",
-          "description": "Enter the redirected key"
-        },
-        "dynamicKeybindings.destinationText": {
-          "type": "string",
-          "default": "",
-          "description": "Enter the destination text"
-        },
-        "dynamicKeybindings.activeProfileParameter": {
-          "type": "string",
-          "default": "",
-          "description": "Enter the active profile parameter"
-        }
-      }
-    }
+    ]
   },
   "main": "./Test_Keybinding_creation/createKeybinding.js"
 }
