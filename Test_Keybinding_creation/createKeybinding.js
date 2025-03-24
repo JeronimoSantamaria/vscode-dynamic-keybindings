@@ -4,7 +4,7 @@ const path = require('path');
 
 function activate(context) {
     context.subscriptions.push(
-        vscode.commands.registerCommand('extension.createKeybinding', async function () {
+        vscode.commands.registerCommand('dynamic-keybindings.openWebview', async function () {
             const panel = vscode.window.createWebviewPanel(
                 'dynamicKeybindingsWebview',
                 'Dynamic Keybindings',
@@ -41,13 +41,14 @@ function getWebviewContent() {
       <title>Dynamic Keybindings</title>
       <style>
         body { font-family: Arial, sans-serif; padding: 20px; }
-        input { display: block; margin-bottom: 10px; width: 100%; padding: 8px; }
+        input { display: block; margin-bottom: 10px; width: 100%; padding: 8px; max-width: 50px; }
         button { padding: 10px 20px; }
       </style>
     </head>
     <body>
       <h1>Dynamic Keybindings</h1>
       <p>Welcome to the Dynamic Keybindings webview!</p>
+      <p>Here you can create custom keybindings for your workflow.</p>
       <form id="keybindingForm">
         <label for="redirectedKey">Redirected Key:</label>
         <input type="text" id="redirectedKey" name="redirectedKey" required>
