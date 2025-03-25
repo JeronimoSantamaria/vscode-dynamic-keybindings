@@ -1,4 +1,5 @@
 const vscode = require('vscode');
+const createKeybinding = require('../Test_Keybinding_creation/createKeybinding');
 
 let dynamicKeybindingsEnabled = true;
 let activeProfile = 'profile1';
@@ -12,6 +13,7 @@ function updateStatusBar() {
 }
 
 function activate(context) {
+    createKeybinding.activate(context);
     vscode.commands.executeCommand('setContext', 'dynamicKeybindingsEnabled', dynamicKeybindingsEnabled);
     vscode.commands.executeCommand('setContext', 'activeProfile', activeProfile);
 
@@ -43,7 +45,9 @@ function activate(context) {
     context.subscriptions.push(toggleDisposable, profile1Disposable, profile2Disposable);
 }
 
-function deactivate() { }
+function deactivate() {
+    createKeybinding.deactivate();
+}
 
 module.exports = {
     activate,
