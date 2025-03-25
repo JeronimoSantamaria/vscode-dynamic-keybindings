@@ -2,7 +2,7 @@
   "name": "dynamic-keybindings",
   "displayName": "Dynamic Keybindings",
   "description": "Dynamic Keybindings is an extension for Visual Studio Code that allows you to create and manage dynamic keyboard shortcut profiles. With this tool, you can define custom groups of keybindings and activate or deactivate them using simple commands, adapting your development environment to your needs and improving your typing productivity.",
-  "version": "0.4.0",
+  "version": "0.5.1",
   "engines": {
     "vscode": "^1.97.0"
   },
@@ -26,6 +26,10 @@
       {
         "command": "extension.createKeybinding",
         "title": "Create Keybinding"
+      },
+      {
+        "command": "dynamic-keybindings.openWebview",
+        "title": "Open Dynamic Keybindings Webview"
       }
     ],
     "keybindings": [
@@ -59,94 +63,9 @@
         "args": {
           "text": "\""
         },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile1'"
-      },
-      {
-        "key": "3",
-        "command": "type",
-        "args": {
-          "text": "#"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile1'"
-      },
-      {
-        "key": "4",
-        "command": "type",
-        "args": {
-          "text": "$"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile1'"
-      },
-      {
-        "key": "5",
-        "command": "type",
-        "args": {
-          "text": "%"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile1'"
-      },
-      {
-        "key": "6",
-        "command": "type",
-        "args": {
-          "text": "&"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile2'"
-      },
-      {
-        "key": "7",
-        "command": "type",
-        "args": {
-          "text": "/"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile2'"
-      },
-      {
-        "key": "8",
-        "command": "type",
-        "args": {
-          "text": "("
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile2'"
-      },
-      {
-        "key": "9",
-        "command": "type",
-        "args": {
-          "text": ")"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile2'"
-      },
-      {
-        "key": "0",
-        "command": "type",
-        "args": {
-          "text": "="
-        },
         "when": "dynamicKeybindingsEnabled && activeProfile == 'profile2'"
       }
-    ],
-    "configuration": {
-      "type": "object",
-      "title": "Dynamic Keybindings",
-      "properties": {
-        "dynamicKeybindings.redirectedKey": {
-          "type": "string",
-          "default": "",
-          "description": "Enter the redirected key"
-        },
-        "dynamicKeybindings.destinationText": {
-          "type": "string",
-          "default": "",
-          "description": "Enter the destination text"
-        },
-        "dynamicKeybindings.activeProfileParameter": {
-          "type": "string",
-          "default": "",
-          "description": "Enter the active profile parameter"
-        }
-      }
-    }
+    ]
   },
   "main": "./Test_Keybinding_creation/createKeybinding.js"
 }
