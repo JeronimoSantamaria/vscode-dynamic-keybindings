@@ -67,5 +67,5 @@
       }
     ]
   },
-  "main": "./Test_Keybinding_creation/createKeybinding.js"
+  "main": "./src/extension.js"
 }

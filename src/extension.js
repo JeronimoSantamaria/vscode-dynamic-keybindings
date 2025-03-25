@@ -28,6 +28,8 @@ function activate(context) {
         updateStatusBar();
     });
 
+    context.subscriptions.push(toggleDisposable);
+
     let profile1Disposable = vscode.commands.registerCommand('dynamic-keybindings.profile1', function () {
         activeProfile = 'profile1';
         vscode.commands.executeCommand('setContext', 'activeProfile', activeProfile);
@@ -42,7 +44,7 @@ function activate(context) {
         updateStatusBar();
     });
 
-    context.subscriptions.push(toggleDisposable, profile1Disposable, profile2Disposable);
+    context.subscriptions.push(profile1Disposable, profile2Disposable);
 }
 
 function deactivate() {

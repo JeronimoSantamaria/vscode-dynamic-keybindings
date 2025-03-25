@@ -1,1 +1,129 @@
 []
+{
+            "key": "q", 
+            "command": "type",
+            "args": {
+              "text": "Q"
+            },
+            "when": "dynamicKeybindingsEnabled && activeProfile == 'profile!'"
+        },
+{
+            "key": "q", 
+            "command": "type",
+            "args": {
+              "text": "Q"
+            },
+            "when": "dynamicKeybindingsEnabled && activeProfile == 'profile!'"
+        },
+{
+            "key": "q", 
+            "command": "type",
+            "args": {
+              "text": "Q"
+            },
+            "when": "dynamicKeybindingsEnabled && activeProfile == 'profile!'"
+        },
+{
+            "key": "q", 
+            "command": "type",
+            "args": {
+              "text": "Q"
+            },
+            "when": "dynamicKeybindingsEnabled && activeProfile == 'profile!'"
+        },
+{
+            "key": "q", 
+            "command": "type",
+            "args": {
+              "text": "Q"
+            },
+            "when": "dynamicKeybindingsEnabled && activeProfile == 'profile!'"
+        },
+{
+            "key": "q", 
+            "command": "type",
+            "args": {
+              "text": "Q"
+            },
+            "when": "dynamicKeybindingsEnabled && activeProfile == 'profile!'"
+        },
+{
+            "key": "q", 
+            "command": "type",
+            "args": {
+              "text": "Q"
+            },
+            "when": "dynamicKeybindingsEnabled && activeProfile == 'profile!'"
+        },
+{
+            "key": "q", 
+            "command": "type",
+            "args": {
+              "text": "Q"
+            },
+            "when": "dynamicKeybindingsEnabled && activeProfile == 'profile!'"
+        },
+{
+            "key": "q", 
+            "command": "type",
+            "args": {
+              "text": "Q"
+            },
+            "when": "dynamicKeybindingsEnabled && activeProfile == 'profile!'"
+        },
+{
+            "key": "q", 
+            "command": "type",
+            "args": {
+              "text": "Q"
+            },
+            "when": "dynamicKeybindingsEnabled && activeProfile == 'profile!'"
+        },
+{
+            "key": "e", 
+            "command": "type",
+            "args": {
+              "text": "s"
+            },
+            "when": "dynamicKeybindingsEnabled && activeProfile == 'w'"
+        },
+{
+            "key": "e", 
+            "command": "type",
+            "args": {
+              "text": "s"
+            },
+            "when": "dynamicKeybindingsEnabled && activeProfile == 'w'"
+        },
+{
+            "key": "e", 
+            "command": "type",
+            "args": {
+              "text": "s"
+            },
+            "when": "dynamicKeybindingsEnabled && activeProfile == 'w'"
+        },
+{
+            "key": "e", 
+            "command": "type",
+            "args": {
+              "text": "s"
+            },
+            "when": "dynamicKeybindingsEnabled && activeProfile == 'w'"
+        },
+{
+            "key": "e", 
+            "command": "type",
+            "args": {
+              "text": "s"
+            },
+            "when": "dynamicKeybindingsEnabled && activeProfile == 'w'"
+        },
+{
+            "key": "e", 
+            "command": "type",
+            "args": {
+              "text": "s"
+            },
+            "when": "dynamicKeybindingsEnabled && activeProfile == 'w'"
+        },
