@@ -1,0 +1,10 @@
+[
+    {
+        "key": "4",
+        "command": "type",
+        "args": {
+            "text": "$"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile2'"
+    }
+]

@@ -1,4 +1,7 @@
+/*This File is meant to manage all the native commands in the extension*/
 const vscode = require('vscode');
+const fs = require('fs');
+const path = require('path');
 const createKeybinding = require('../Test_Keybinding_creation/createKeybinding');
 
 let dynamicKeybindingsEnabled = true;
@@ -12,15 +15,35 @@ function updateStatusBar() {
     }
 }
 
+function loadKeybindings(profile) {
+    const keybindingsFilePath = path.join(__dirname, '..', 'keybinding-profiles', `${profile}.json`);
+    if (fs.existsSync(keybindingsFilePath)) {
+        const keybindings = JSON.parse(fs.readFileSync(keybindingsFilePath, 'utf8'));
+
+        // Dynamically set the keybindings in the VS Code context
+        vscode.commands.executeCommand('setContext', 'dynamicKeybindingsEnabled', dynamicKeybindingsEnabled);
+        vscode.commands.executeCommand('setContext', 'activeProfile', profile);
+
+        // Apply the keybindings (this is a conceptual step; VS Code doesn't allow runtime keybinding changes directly)
+        vscode.window.showInformationMessage(`Keybindings for profile "${profile}" loaded successfully.`);
+    } else {
+        vscode.window.showErrorMessage(`Profile "${profile}" not found.`);
+    }
+}
+
 function activate(context) {
     createKeybinding.activate(context);
+
+    // Set initial context
     vscode.commands.executeCommand('setContext', 'dynamicKeybindingsEnabled', dynamicKeybindingsEnabled);
     vscode.commands.executeCommand('setContext', 'activeProfile', activeProfile);
 
+    // Create a status bar item
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
     context.subscriptions.push(statusBarItem);
     updateStatusBar();
 
+    // Command to toggle dynamic keybindings
     let toggleDisposable = vscode.commands.registerCommand('dynamic-keybindings.toggle', function () {
         dynamicKeybindingsEnabled = !dynamicKeybindingsEnabled;
         vscode.commands.executeCommand('setContext', 'dynamicKeybindingsEnabled', dynamicKeybindingsEnabled);
@@ -28,17 +51,17 @@ function activate(context) {
         updateStatusBar();
     });
 
+    // Command to activate Profile 1
     let profile1Disposable = vscode.commands.registerCommand('dynamic-keybindings.profile1', function () {
         activeProfile = 'profile1';
-        vscode.commands.executeCommand('setContext', 'activeProfile', activeProfile);
-        vscode.window.showInformationMessage('Profile 1 Activated');
+        loadKeybindings(activeProfile);
         updateStatusBar();
     });
 
+    // Command to activate Profile 2
     let profile2Disposable = vscode.commands.registerCommand('dynamic-keybindings.profile2', function () {
         activeProfile = 'profile2';
-        vscode.commands.executeCommand('setContext', 'activeProfile', activeProfile);
-        vscode.window.showInformationMessage('Profile 2 Activated');
+        loadKeybindings(activeProfile);
         updateStatusBar();
     });
 
