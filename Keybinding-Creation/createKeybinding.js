@@ -2,37 +2,37 @@ const vscode = require('vscode');
 const fs = require('fs');
 const path = require('path');
 
-function activate(context) {
-    context.subscriptions.push(
-        vscode.commands.registerCommand('dynamic-keybindings.openWebview', async function () {
-            const panel = vscode.window.createWebviewPanel(
-                'dynamicKeybindingsWebview',
-                'Dynamic Keybindings',
-                vscode.ViewColumn.One,
-                {
-                    enableScripts: true
-                }
-            );
+function activate(context) { // Define the open webview command
+  context.subscriptions.push(
+    vscode.commands.registerCommand('dynamic-keybindings.openWebview', async function () {
+      const panel = vscode.window.createWebviewPanel(
+        'dynamicKeybindingsWebview',
+        'Dynamic Keybindings',
+        vscode.ViewColumn.One,
+        {
+          enableScripts: true
+        }
+      );
 
-            panel.webview.html = getWebviewContent();
+      panel.webview.html = getWebviewContent();
 
-            panel.webview.onDidReceiveMessage(
-                message => {
-                    switch (message.command) {
-                        case 'createKeybinding':
-                            createKeybinding(message.redirectedKey, message.destinationText, message.activeProfileParameter);
-                            return;
-                    }
-                },
-                undefined,
-                context.subscriptions
-            );
-        })
-    );
+      panel.webview.onDidReceiveMessage(
+        message => {
+          switch (message.command) {
+            case 'createKeybinding':
+              createKeybinding(message.redirectedKey, message.destinationText, message.activeProfileParameter);
+              return;
+          }
+        },
+        undefined,
+        context.subscriptions
+      );
+    })
+  );
 }
 
-function getWebviewContent() {
-    return `
+function getWebviewContent() { // Define the HTML content for the webview
+  return `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -51,7 +51,7 @@ function getWebviewContent() {
       <p>Here you can create custom keybindings for your workflow.</p>
       <form id="keybindingForm">
         <label for="redirectedKey">Redirected Key:</label>
-        <input type="text" id="redirectedKey" name="redirectedKey" required>
+        <input type="text" id="redirectedKey" name="redirectedKey" required> 
         <label for="destinationText">Destination Text:</label>
         <input type="text" id="destinationText" name="destinationText" required>
         <label for="activeProfileParameter">Active Profile Parameter:</label>
@@ -79,8 +79,9 @@ function getWebviewContent() {
 }
 
 function createKeybinding(redirectedKey, destinationText, activeProfileParameter) {
-    if (redirectedKey && destinationText && activeProfileParameter) {
-        const template = `{
+  // Get the values from the webview and create a keybinding with the provided template
+  if (redirectedKey && destinationText && activeProfileParameter) {
+    const template = `{
             "key": "${redirectedKey}", 
             "command": "type",
             "args": {
@@ -89,17 +90,17 @@ function createKeybinding(redirectedKey, destinationText, activeProfileParameter
             "when": "dynamicKeybindingsEnabled && activeProfile == '${activeProfileParameter}'"
         },`;
 
-        const keybindingsFilePath = path.join(__dirname, 'testKeybindings.json');
-        fs.appendFileSync(keybindingsFilePath, template + '\n', 'utf8');
-        vscode.window.showInformationMessage('Keybinding created successfully!');
-    } else {
-        vscode.window.showErrorMessage('All fields are required to create a keybinding.');
-    }
+    const keybindingsFilePath = path.join(__dirname, 'storageKeybindings.json'); // Define the path to the keybindings file
+    fs.appendFileSync(keybindingsFilePath, template + '\n', 'utf8');
+    vscode.window.showInformationMessage('Keybinding created successfully!'); // Show a success message
+  } else { // Check if all fields are filled before creating the keybinding
+    vscode.window.showErrorMessage('All fields are required to create a keybinding.');
+  }
 }
 
 function deactivate() { }
 
 module.exports = {
-    activate,
-    deactivate
+  activate,
+  deactivate
 };
