@@ -2,7 +2,8 @@ const vscode = require('vscode');
 const fs = require('fs');
 const path = require('path');
 
-function activate(context) { // Define the open webview command
+function activate(context) {
+  // Define the open webview command
   context.subscriptions.push(
     vscode.commands.registerCommand('dynamic-keybindings.openWebview', async function () {
       const panel = vscode.window.createWebviewPanel(
@@ -31,7 +32,9 @@ function activate(context) { // Define the open webview command
   );
 }
 
-function getWebviewContent() { // Define the HTML content for the webview, including the form for creating keybindings
+function getWebviewContent() {
+  /* Define the HTML content for the webview,
+  including the form for creating keybindings */
   return `
     <!DOCTYPE html>
     <html lang="en">
@@ -97,7 +100,7 @@ function createKeybinding(redirectedKey, destinationText, activeProfileParameter
     const keybindingsFilePath = path.join(__dirname, 'storageKeybindings.json'); // Define the path to the keybindings file
 
     try {
-      // Read the existing content of the file
+      // Read the existing content of the file with the purpose of identifiying the line number to insert the template
       let fileContent = fs.readFileSync(keybindingsFilePath, 'utf8');
       const lines = fileContent.split('\n');
 

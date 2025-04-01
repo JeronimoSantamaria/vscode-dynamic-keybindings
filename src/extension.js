@@ -5,14 +5,18 @@ let dynamicKeybindingsEnabled = false; // Define the initial state of dynamic ke
 let activeProfile = 'profile1'; // Define the initial profile
 let statusBarItem; // Status bar item to show the current state of dynamic keybindings
 
-function updateStatusBar() { // Update the status bar item with the current state of dynamic keybindings and active profile
+function updateStatusBar() {
+    /* Update the status bar item with the current 
+    state of dynamic keybindings and active profile */
     if (statusBarItem) {
         statusBarItem.text = `$(keyboard) ${dynamicKeybindingsEnabled ? 'Enabled' : 'Disabled'} - ${activeProfile}`;
         statusBarItem.show();
     }
 }
 
-function activate(context) { // Define the status and create the bar item to show the current state of dynamic keybindings and active profile
+function activate(context) {
+    /* Define the status and create the bar item to show the current 
+    state of dynamic keybindings and active profile */
     createKeybinding.activate(context);
     vscode.commands.executeCommand('setContext', 'dynamicKeybindingsEnabled', dynamicKeybindingsEnabled);
     vscode.commands.executeCommand('setContext', 'activeProfile', activeProfile);
