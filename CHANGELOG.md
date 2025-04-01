@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.5.2] - 2025-04-01
+### Changed
+- Created keybindings are now inserted in a specific line instead of appended
+
+### Fixed
+- The webview form now restarts after creating a new keybinding
+
 ## [0.5.1] - 2025-03-24
 ### Changed
 - Max length of text fields in webview
