@@ -31,7 +31,7 @@ function activate(context) { // Define the open webview command
   );
 }
 
-function getWebviewContent() { // Define the HTML content for the webview
+function getWebviewContent() { // Define the HTML content for the webview, including the form for creating keybindings
   return `
     <!DOCTYPE html>
     <html lang="en">
@@ -71,6 +71,9 @@ function getWebviewContent() { // Define the HTML content for the webview
             destinationText,
             activeProfileParameter
           });
+
+          // Clear the form fields after submission
+          document.getElementById('keybindingForm').reset();
         });
       </script>
     </body>
@@ -79,9 +82,10 @@ function getWebviewContent() { // Define the HTML content for the webview
 }
 
 function createKeybinding(redirectedKey, destinationText, activeProfileParameter) {
-  // Get the values from the webview and create a keybinding with the provided template
+  // Gets the values from the webview and create a keybinding with the provided template
   if (redirectedKey && destinationText && activeProfileParameter) {
-    const template = `{
+    const template = `
+        {
             "key": "${redirectedKey}", 
             "command": "type",
             "args": {
@@ -91,9 +95,26 @@ function createKeybinding(redirectedKey, destinationText, activeProfileParameter
         },`;
 
     const keybindingsFilePath = path.join(__dirname, 'storageKeybindings.json'); // Define the path to the keybindings file
-    fs.appendFileSync(keybindingsFilePath, template + '\n', 'utf8');
-    vscode.window.showInformationMessage('Keybinding created successfully!'); // Show a success message
-  } else { // Check if all fields are filled before creating the keybinding
+
+    try {
+      // Read the existing content of the file
+      let fileContent = fs.readFileSync(keybindingsFilePath, 'utf8');
+      const lines = fileContent.split('\n');
+
+      // Specify the line number where the template should be inserted (e.g., after line 2)
+      const insertLine = 2; // Adjust this to the desired line number (0-based index)
+
+      // Insert the template at the specified line
+      lines.splice(insertLine, 0, template);
+
+      // Write the updated content back to the file
+      fs.writeFileSync(keybindingsFilePath, lines.join('\n'), 'utf8');
+
+      vscode.window.showInformationMessage('Keybinding created successfully!');
+    } catch (error) {
+      vscode.window.showErrorMessage(`Failed to create keybinding: ${error.message}`);
+    }
+  } else {
     vscode.window.showErrorMessage('All fields are required to create a keybinding.');
   }
 }
