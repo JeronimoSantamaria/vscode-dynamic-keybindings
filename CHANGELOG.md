@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.6.0] - 2025-04-07
+### Added
+- The user can now add new profiles through the Webview interface
+
+### Changed
+- Now the profiles are storage in the VS code Global State
+- Logic of active profile
+- Profile 1 and 2 for a Default and some extras for testing 
+
 ## [0.5.2] - 2025-04-01
 ### Changed
 - Created keybindings are now inserted in a specific line instead of appended

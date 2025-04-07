@@ -5,6 +5,8 @@ const path = require('path');
 let profiles = { P0: 'Default Profile' }; // Dictionary to store profiles
 
 function activate(context) {
+  loadProfiles(context);
+
   context.subscriptions.push(
     vscode.commands.registerCommand('dynamic-keybindings.openWebview', async function () {
       const panel = vscode.window.createWebviewPanel(
@@ -25,12 +27,13 @@ function activate(context) {
               createKeybinding(message.redirectedKey, message.destinationText, message.activeProfileParameter);
               return;
             case 'addProfile':
-              addProfile(message.profileName);
-              panel.webview.postMessage({ command: 'updateProfiles', profiles });
+              addProfile(message.profileName, context);
               return;
             case 'deleteProfile':
-              deleteProfile(message.profileId);
-              panel.webview.postMessage({ command: 'updateProfiles', profiles });
+              deleteProfile(message.profileId, context);
+              return;
+            case 'printProfiles':
+              console.log(profiles);
               return;
           }
         },
@@ -66,6 +69,7 @@ function getWebviewContent() {
       <ul id="profileList"></ul>
       <input type="text" id="newProfileName" placeholder="New Profile Name">
       <button id="addProfileButton">Add Profile</button>
+      <button id="printProfilesButton">Print Profiles</button>
 
       <h2>Create Keybinding</h2>
       <form id="keybindingForm">
@@ -119,6 +123,11 @@ function getWebviewContent() {
           document.getElementById('keybindingForm').reset();
         });
 
+        // Handle printing profiles to the console
+        document.getElementById('printProfilesButton').addEventListener('click', () => {
+          vscode.postMessage({ command: 'printProfiles' });
+        });
+
         // Update profiles in the UI
         window.addEventListener('message', (event) => {
           const message = event.data;
@@ -145,23 +154,39 @@ function getWebviewContent() {
   `;
 }
 
-function addProfile(profileName) {
-  const profileId = `P${Object.keys(profiles).length}`;
-  profiles[profileId] = profileName;
-
-  // Notify the webview of the updated profiles
-  vscode.window.activeTextEditor?.webview?.postMessage({ command: 'updateProfiles', profiles });
-
-  vscode.window.showInformationMessage(`Profile "${profileName}" added.`);
+function loadProfiles(context) {
+  profiles = context.globalState.get('profiles', { P0: 'Default Profile' });
+  return profiles;
 }
 
-function deleteProfile(profileId) {
+function saveProfiles(context) {
+  context.globalState.update('profiles', profiles);
+}
+
+function addProfile(profileName, context) {
+  const profileId = `P${Object.keys(profiles).length}`;
+  profiles[profileId] = profileName;
+  saveProfiles(context);
+
+  // Register the command for the new profile
+  const extension = vscode.extensions.getExtension('dynamic-keybindings');
+  if (extension) {
+    const extensionExports = extension.exports;
+    if (extensionExports && typeof extensionExports.registerProfileCommand === 'function') {
+      extensionExports.registerProfileCommand(context, profileId, profileName);
+    }
+  }
+
+  vscode.window.activeTextEditor?.webview?.postMessage({ command: 'updateProfiles', profiles });
+  vscode.window.showInformationMessage(`Profile "${profileName}" added. Use Command Palette to access it.`);
+}
+
+function deleteProfile(profileId, context) {
   if (profiles[profileId]) {
     delete profiles[profileId];
+    saveProfiles(context);
 
-    // Notify the webview of the updated profiles
     vscode.window.activeTextEditor?.webview?.postMessage({ command: 'updateProfiles', profiles });
-
     vscode.window.showInformationMessage(`Profile "${profileId}" deleted.`);
   } else {
     vscode.window.showErrorMessage(`Profile "${profileId}" does not exist.`);
@@ -201,5 +226,15 @@ function deactivate() { }
 
 module.exports = {
   activate,
-  deactivate
+  deactivate,
+  loadProfiles,
+  profiles,
+  addProfile,
+  deleteProfile,
+  registerProfileCommand: (context, profileId, profileName) => {
+    const extension = vscode.extensions.getExtension('dynamic-keybindings');
+    if (extension && extension.exports && typeof extension.exports.registerProfileCommand === 'function') {
+      extension.exports.registerProfileCommand(context, profileId, profileName);
+    }
+  }
 };
