@@ -59,6 +59,16 @@ function getWebviewContent() {
         body { font-family: Arial, sans-serif; padding: 20px; }
         input, select { display: block; margin-bottom: 10px; width: 100%; padding: 8px; }
         button { padding: 10px 20px; margin-right: 10px; }
+        #adMessage { 
+          display: none; 
+          background: #fff3cd; 
+          color: #664d03; 
+          padding: 15px; 
+          margin: 10px 0; 
+          border: 1px solid #ffecb5; 
+          border-radius: 4px; 
+          font-size: 14px;
+        }
       </style>
     </head>
     <body>
@@ -70,6 +80,10 @@ function getWebviewContent() {
       <input type="text" id="newProfileName" placeholder="New Profile Name">
       <button id="addProfileButton">Add Profile</button>
       <button id="printProfilesButton">Print Profiles</button>
+
+      <div id="adMessage">
+        <p><strong>Warning:</strong> You have reach the maximum (9) of predefine activate profiles commands, if you add one more, you will have to define it manually in package.json</p>
+      </div>
 
       <h2>Create Keybinding</h2>
       <form id="keybindingForm">
@@ -135,6 +149,11 @@ function getWebviewContent() {
             const profiles = message.profiles;
             profileList.innerHTML = '';
             activeProfileSelect.innerHTML = '';
+            
+            // Show/hide ad message based on profiles count
+            const adMessage = document.getElementById('adMessage');
+            adMessage.style.display = Object.keys(profiles).length >= 9 ? 'block' : 'none';
+            
             for (const [id, name] of Object.entries(profiles)) {
               const li = document.createElement('li');
               li.textContent = \`\${name} (\${id})\`;
