@@ -57,8 +57,11 @@ function getWebviewContent() {
       <title>Dynamic Keybindings</title>
       <style>
         body { font-family: Arial, sans-serif; padding: 20px; }
-        input, select { display: block; margin-bottom: 10px; width: 100%; padding: 8px; }
+        input, select { display: block; margin-bottom: 10px; width: 100%; padding: 8px; max-width: 220px;}
         button { padding: 10px 20px; margin-right: 10px; }
+        #profileList { max-width: 220px; padding: 0; }
+        #profileList li { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .delete-profile { padding: 5px 10px; margin: 0; }
         #adMessage { 
           display: none; 
           background: #fff3cd; 
@@ -152,7 +155,7 @@ function getWebviewContent() {
             
             // Show/hide ad message based on profiles count
             const adMessage = document.getElementById('adMessage');
-            adMessage.style.display = Object.keys(profiles).length >= 9 ? 'block' : 'none';
+            adMessage.style.display = Object.keys(profiles).length >= 8 ? 'block' : 'none';
             
             for (const [id, name] of Object.entries(profiles)) {
               const li = document.createElement('li');

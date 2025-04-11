@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.6.2] - 2025-04-07
+### Modified
+- createKeybinding Function now inserts the keybinding directly to package.json, ready to be used
+
 ## [0.6.1] - 2025-04-07
 ### Added
 - Added an informational message to the webview when the profiles dictionary overrides the preset commands for switching between commands. This serves as a preventive measure until a more scalable solution is implemented.
