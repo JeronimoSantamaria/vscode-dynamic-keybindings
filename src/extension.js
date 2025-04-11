@@ -1,19 +1,42 @@
 const vscode = require('vscode');
-const createKeybinding = require('../Test_Keybinding_creation/createKeybinding');
+const createKeybinding = require('../Keybinding-Creation/createKeybinding');
 
-let dynamicKeybindingsEnabled = true;
-let activeProfile = 'profile1';
+let dynamicKeybindingsEnabled = false;
+let activeProfile = 'P0'; // Default profile ID
 let statusBarItem;
+let profiles = {};
 
 function updateStatusBar() {
     if (statusBarItem) {
-        statusBarItem.text = `$(keyboard) ${dynamicKeybindingsEnabled ? 'Enabled' : 'Disabled'} - ${activeProfile}`;
+        const profileName = profiles[activeProfile] || 'Unknown Profile';
+        statusBarItem.text = `$(keyboard) ${dynamicKeybindingsEnabled ? 'Enabled' : 'Disabled'} - ${profileName}`;
         statusBarItem.show();
     }
 }
 
+function registerProfileCommand(context, profileId, profileName) {
+    // Register the command
+    let profileDisposable = vscode.commands.registerCommand(`dynamic-keybindings.${profileId}`, function () {
+        activeProfile = profileId;
+        vscode.commands.executeCommand('setContext', 'activeProfile', activeProfile);
+        vscode.window.showInformationMessage(`${profileName} Activated`);
+        updateStatusBar();
+    });
+    context.subscriptions.push(profileDisposable);
+
+    // Register the keybinding
+    const keybinding = vscode.commands.registerCommand(`dynamic-keybindings.${profileId}.keybinding`, () => {
+        vscode.commands.executeCommand(`dynamic-keybindings.${profileId}`);
+    });
+    context.subscriptions.push(keybinding);
+}
+
 function activate(context) {
+    // Load profiles from global state
+    profiles = createKeybinding.loadProfiles(context);
     createKeybinding.activate(context);
+
+    // Set initial context
     vscode.commands.executeCommand('setContext', 'dynamicKeybindingsEnabled', dynamicKeybindingsEnabled);
     vscode.commands.executeCommand('setContext', 'activeProfile', activeProfile);
 
@@ -28,21 +51,12 @@ function activate(context) {
         updateStatusBar();
     });
 
-    let profile1Disposable = vscode.commands.registerCommand('dynamic-keybindings.profile1', function () {
-        activeProfile = 'profile1';
-        vscode.commands.executeCommand('setContext', 'activeProfile', activeProfile);
-        vscode.window.showInformationMessage('Profile 1 Activated');
-        updateStatusBar();
+    // Register commands for all profiles
+    Object.entries(profiles).forEach(([profileId, profileName]) => {
+        registerProfileCommand(context, profileId, profileName);
     });
 
-    let profile2Disposable = vscode.commands.registerCommand('dynamic-keybindings.profile2', function () {
-        activeProfile = 'profile2';
-        vscode.commands.executeCommand('setContext', 'activeProfile', activeProfile);
-        vscode.window.showInformationMessage('Profile 2 Activated');
-        updateStatusBar();
-    });
-
-    context.subscriptions.push(toggleDisposable, profile1Disposable, profile2Disposable);
+    context.subscriptions.push(toggleDisposable);
 }
 
 function deactivate() {

@@ -6,9 +6,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.6.2] - 2025-04-07
+### Modified
+- createKeybinding Function now inserts the keybinding directly to package.json, ready to be used
+
+## [0.6.1] - 2025-04-07
+### Added
+- Added an informational message to the webview when the profiles dictionary overrides the preset commands for switching between commands. This serves as a preventive measure until a more scalable solution is implemented.
+
+## [0.6.0] - 2025-04-07
+### Added
+- The user can now add new profiles through the Webview interface
+
+### Changed
+- Now the profiles are storage in the VS code Global State
+- Logic of active profile
+- Profile 1 and 2 for a Default and some extras for testing 
+
+## [0.5.2] - 2025-04-01
+### Changed
+- Created keybindings are now inserted in a specific line instead of appended
+
+### Fixed
+- The webview form now restarts after creating a new keybinding
+
 ## [0.5.1] - 2025-03-24
 ### Changed
-- Max length of text fields
+- Max length of text fields in webview
 ### Fixed
 - Error of misstracked command
 

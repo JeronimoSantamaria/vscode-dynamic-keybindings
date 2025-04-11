@@ -2,12 +2,15 @@
   "name": "dynamic-keybindings",
   "displayName": "Dynamic Keybindings",
   "description": "Dynamic Keybindings is an extension for Visual Studio Code that allows you to create and manage dynamic keyboard shortcut profiles. With this tool, you can define custom groups of keybindings and activate or deactivate them using simple commands, adapting your development environment to your needs and improving your typing productivity.",
-  "version": "0.5.1",
+  "version": "0.6.2",
   "engines": {
     "vscode": "^1.97.0"
   },
   "categories": [
     "Keymaps"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
   ],
   "contributes": {
     "commands": [
@@ -16,16 +19,44 @@
         "title": "Toggle Dynamic Keybindings"
       },
       {
-        "command": "dynamic-keybindings.profile1",
+        "command": "dynamic-keybindings.P0",
+        "title": "Activate Default Profile"
+      },
+      {
+        "command": "dynamic-keybindings.P1",
         "title": "Activate Profile 1"
       },
       {
-        "command": "dynamic-keybindings.profile2",
+        "command": "dynamic-keybindings.P2",
         "title": "Activate Profile 2"
       },
       {
-        "command": "extension.createKeybinding",
-        "title": "Create Keybinding"
+        "command": "dynamic-keybindings.P3",
+        "title": "Activate Profile 3"
+      },
+      {
+        "command": "dynamic-keybindings.P4",
+        "title": "Activate Profile 4"
+      },
+      {
+        "command": "dynamic-keybindings.P5",
+        "title": "Activate Profile 5"
+      },
+      {
+        "command": "dynamic-keybindings.P6",
+        "title": "Activate Profile 6"
+      },
+      {
+        "command": "dynamic-keybindings.P7",
+        "title": "Activate Profile 7"
+      },
+      {
+        "command": "dynamic-keybindings.P8",
+        "title": "Activate Profile 8"
+      },
+      {
+        "command": "dynamic-keybindings.P9",
+        "title": "Activate Profile 9"
       },
       {
         "command": "dynamic-keybindings.openWebview",
@@ -42,30 +73,74 @@
         "command": "dynamic-keybindings.toggle"
       },
       {
-        "key": "ctrl+1",
-        "command": "dynamic-keybindings.profile1"
+        "key": "ctrl+shift+1",
+        "command": "dynamic-keybindings.P0"
       },
       {
-        "key": "ctrl+2",
-        "command": "dynamic-keybindings.profile2"
+        "key": "ctrl+shift+2",
+        "command": "dynamic-keybindings.P1"
+      },
+      {
+        "key": "ctrl+shift+3",
+        "command": "dynamic-keybindings.P2"
+      },
+      {
+        "key": "ctrl+shift+4",
+        "command": "dynamic-keybindings.P3"
+      },
+      {
+        "key": "ctrl+shift+5",
+        "command": "dynamic-keybindings.P4"
+      },
+      {
+        "key": "ctrl+shift+6",
+        "command": "dynamic-keybindings.P5"
+      },
+      {
+        "key": "ctrl+shift+7",
+        "command": "dynamic-keybindings.P6"
+      },
+      {
+        "key": "ctrl+shift+8",
+        "command": "dynamic-keybindings.P7"
+      },
+      {
+        "key": "ctrl+shift+9",
+        "command": "dynamic-keybindings.P8"
       },
       {
         "key": "1",
         "command": "type",
         "args": {
-          "text": "!"
+          "text": "Hello from Default Profile!"
         },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile1'"
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
       },
       {
         "key": "2",
         "command": "type",
         "args": {
-          "text": "\""
+          "text": "¯\\_(ツ)_/¯"
         },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'profile2'"
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P1'"
+      },
+      {
+        "key": "3",
+        "command": "type",
+        "args": {
+          "text": "Write in C++ with this profile!"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P2'"
+      },
+      {
+        "key": "4",
+        "command": "type",
+        "args": {
+          "text": "This is a Python profile!"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P3'"
       }
     ]
   },
-  "main": "./Test_Keybinding_creation/createKeybinding.js"
+  "main": "./src/extension.js"
 }
