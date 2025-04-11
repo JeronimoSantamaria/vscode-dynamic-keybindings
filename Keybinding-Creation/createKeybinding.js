@@ -215,24 +215,29 @@ function deleteProfile(profileId, context) {
 function createKeybinding(redirectedKey, destinationText, activeProfileParameter) {
   if (redirectedKey && destinationText && activeProfileParameter) {
     const template = `
-        {
-            "key": "${redirectedKey}", 
-            "command": "type",
-            "args": {
-              "text": "${destinationText}"
-            },
-            "when": "dynamicKeybindingsEnabled && activeProfile == '${activeProfileParameter}'"
-        },`;
+      ,
+      {
+        "key": "${redirectedKey}", 
+        "command": "type",
+        "args": {
+          "text": "${destinationText}"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == '${activeProfileParameter}'"
+      }`;
 
-    const keybindingsFilePath = path.join(__dirname, 'storageKeybindings.json');
+    const keybindingsFilePath = path.join(__dirname, '../package.json');
 
     try {
       let fileContent = fs.readFileSync(keybindingsFilePath, 'utf8');
       const lines = fileContent.split('\n');
-      const insertLine = 2;
+      const insertLine = -5;
       lines.splice(insertLine, 0, template);
       fs.writeFileSync(keybindingsFilePath, lines.join('\n'), 'utf8');
-      vscode.window.showInformationMessage('Keybinding created successfully!');
+
+      // Execute save command after creating the keybinding
+      vscode.commands.executeCommand('workbench.action.files.save').then(() => {
+        vscode.window.showInformationMessage('Keybinding created and saved successfully!');
+      });
     } catch (error) {
       vscode.window.showErrorMessage(`Failed to create keybinding: ${error.message}`);
     }
