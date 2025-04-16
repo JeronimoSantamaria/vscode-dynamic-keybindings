@@ -26,14 +26,14 @@ function activate(context) {
             case 'createKeybinding':
               createKeybinding(message.redirectedKey, message.destinationText, message.activeProfileParameter);
               return;
+            case 'createCommand':
+              createCommand(message.commandKey, message.commandAction, message.activeProfileParameter);
+              return;
             case 'addProfile':
               addProfile(message.profileName, context);
               return;
             case 'deleteProfile':
               deleteProfile(message.profileId, context);
-              return;
-            case 'printProfiles':
-              console.log(profiles);
               return;
           }
         },
@@ -72,6 +72,7 @@ function getWebviewContent() {
           border-radius: 4px; 
           font-size: 14px;
         }
+        .example-text { font-size: 12px; color: #666; margin-top: -8px; margin-bottom: 10px; }
       </style>
     </head>
     <body>
@@ -82,7 +83,6 @@ function getWebviewContent() {
       <ul id="profileList"></ul>
       <input type="text" id="newProfileName" placeholder="New Profile Name">
       <button id="addProfileButton">Add Profile</button>
-      <button id="printProfilesButton">Print Profiles</button>
 
       <div id="adMessage">
         <p><strong>Warning:</strong> You have reach the maximum (9) of predefine activate profiles commands, if you add one more, you will have to define it manually in package.json</p>
@@ -97,6 +97,19 @@ function getWebviewContent() {
         <label for="activeProfileParameter">Active Profile:</label>
         <select id="activeProfileParameter" name="activeProfileParameter"></select>
         <button type="submit">Create Keybinding</button>
+      </form>
+
+      <h2>Create Command</h2>
+      <form id="commandForm">
+        <label for="commandKey">Key:</label>
+        <input type="text" id="commandKey" name="commandKey" required>
+        <p class="example-text">Example: ctrl+alt+shift+a</p>
+        <label for="commandAction">Command Action:</label>
+        <input type="text" id="commandAction" name="commandAction" required>
+        <p class="example-text">Example: workbench.action.showCommands</p>
+        <label for="commandProfileParameter">Active Profile:</label>
+        <select id="commandProfileParameter" name="commandProfileParameter"></select>
+        <button type="submit">Create Command</button>
       </form>
 
       <script>
@@ -140,9 +153,20 @@ function getWebviewContent() {
           document.getElementById('keybindingForm').reset();
         });
 
-        // Handle printing profiles to the console
-        document.getElementById('printProfilesButton').addEventListener('click', () => {
-          vscode.postMessage({ command: 'printProfiles' });
+        // Handle creating a command
+        document.getElementById('commandForm').addEventListener('submit', (event) => {
+          event.preventDefault();
+          const commandKey = document.getElementById('commandKey').value;
+          const commandAction = document.getElementById('commandAction').value;
+          const activeProfileParameter = document.getElementById('commandProfileParameter').value;
+          vscode.postMessage({
+            command: 'createCommand',
+            commandKey,
+            commandAction,
+            activeProfileParameter
+          });
+
+          document.getElementById('commandForm').reset();
         });
 
         // Update profiles in the UI
@@ -152,6 +176,8 @@ function getWebviewContent() {
             const profiles = message.profiles;
             profileList.innerHTML = '';
             activeProfileSelect.innerHTML = '';
+            const commandProfileSelect = document.getElementById('commandProfileParameter');
+            commandProfileSelect.innerHTML = '';
             
             // Show/hide ad message based on profiles count
             const adMessage = document.getElementById('adMessage');
@@ -163,10 +189,17 @@ function getWebviewContent() {
               li.innerHTML += \` <button class="delete-profile" data-profile-id="\${id}">Delete</button>\`;
               profileList.appendChild(li);
 
-              const option = document.createElement('option');
-              option.value = id;
-              option.textContent = name;
-              activeProfileSelect.appendChild(option);
+              // Add option to keybinding select
+              const option1 = document.createElement('option');
+              option1.value = id;
+              option1.textContent = name;
+              activeProfileSelect.appendChild(option1);
+
+              // Add option to command select
+              const option2 = document.createElement('option');
+              option2.value = id;
+              option2.textContent = name;
+              commandProfileSelect.appendChild(option2);
             }
           }
         });
@@ -215,10 +248,28 @@ function deleteProfile(profileId, context) {
   }
 }
 
-function createKeybinding(redirectedKey, destinationText, activeProfileParameter) {
+async function createKeybinding(redirectedKey, destinationText, activeProfileParameter) {
   if (redirectedKey && destinationText && activeProfileParameter) {
-    const template = `
-      ,
+    const keybindingsFilePath = path.join(__dirname, '../package.json');
+
+    try {
+      let fileContent = fs.readFileSync(keybindingsFilePath, 'utf8');
+      const packageJson = JSON.parse(fileContent);
+      const keybindings = packageJson.contributes.keybindings;
+
+      // Check for duplicate key binding with same profile
+      const duplicateKey = keybindings.find(kb =>
+        kb.key === redirectedKey &&
+        kb.when &&
+        kb.when.includes(`activeProfile == '${activeProfileParameter}'`)
+      );
+
+      if (duplicateKey) {
+        vscode.window.showErrorMessage(`A keybinding with key "${redirectedKey}" already exists for profile "${activeProfileParameter}"`);
+        return;
+      }
+
+      const template = `
       {
         "key": "${redirectedKey}", 
         "command": "type",
@@ -228,16 +279,11 @@ function createKeybinding(redirectedKey, destinationText, activeProfileParameter
         "when": "dynamicKeybindingsEnabled && activeProfile == '${activeProfileParameter}'"
       }`;
 
-    const keybindingsFilePath = path.join(__dirname, '../package.json');
-
-    try {
-      let fileContent = fs.readFileSync(keybindingsFilePath, 'utf8');
       const lines = fileContent.split('\n');
       const insertLine = -5;
-      lines.splice(insertLine, 0, template);
+      lines.splice(insertLine, 0, ',' + template);
       fs.writeFileSync(keybindingsFilePath, lines.join('\n'), 'utf8');
 
-      // Execute save command after creating the keybinding
       vscode.commands.executeCommand('workbench.action.files.save').then(() => {
         vscode.window.showInformationMessage('Keybinding created and saved successfully!');
       });
@@ -246,6 +292,65 @@ function createKeybinding(redirectedKey, destinationText, activeProfileParameter
     }
   } else {
     vscode.window.showErrorMessage('All fields are required to create a keybinding.');
+  }
+}
+
+async function createCommand(commandKey, commandAction, activeProfileParameter) {
+  if (commandKey && commandAction && activeProfileParameter) {
+    const keybindingsFilePath = path.join(__dirname, '../package.json');
+
+    try {
+      let fileContent = fs.readFileSync(keybindingsFilePath, 'utf8');
+      const packageJson = JSON.parse(fileContent);
+      const keybindings = packageJson.contributes.keybindings;
+
+      // Check for duplicate key binding with same profile
+      const duplicateKey = keybindings.find(kb =>
+        kb.key === commandKey &&
+        kb.when &&
+        kb.when.includes(`activeProfile == '${activeProfileParameter}'`)
+      );
+
+      if (duplicateKey) {
+        vscode.window.showErrorMessage(`A command with key "${commandKey}" already exists for profile "${activeProfileParameter}"`);
+        return;
+      }
+
+      // Check if action is already triggered by another command in same profile
+      const duplicateAction = keybindings.find(kb =>
+        kb.command === commandAction &&
+        kb.when &&
+        kb.when.includes(`activeProfile == '${activeProfileParameter}'`)
+      );
+
+      if (duplicateAction) {
+        const result = await vscode.window.showWarningMessage(
+          `The command "${commandAction}" is already triggered by key "${duplicateAction.key}" in this profile. Do you want to create it anyway?`,
+          'Yes', 'No'
+        );
+        if (result !== 'Yes') return;
+      }
+
+      const template = `
+      {
+        "key": "${commandKey}",
+        "command": "${commandAction}",
+        "when": "dynamicKeybindingsEnabled && activeProfile == '${activeProfileParameter}'"
+      }`;
+
+      const lines = fileContent.split('\n');
+      const insertLine = -5;
+      lines.splice(insertLine, 0, ',' + template);
+      fs.writeFileSync(keybindingsFilePath, lines.join('\n'), 'utf8');
+
+      vscode.commands.executeCommand('workbench.action.files.save').then(() => {
+        vscode.window.showInformationMessage('Command created and saved successfully!');
+      });
+    } catch (error) {
+      vscode.window.showErrorMessage(`Failed to create command: ${error.message}`);
+    }
+  } else {
+    vscode.window.showErrorMessage('All fields are required to create a command.');
   }
 }
 
