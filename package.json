@@ -2,7 +2,7 @@
   "name": "dynamic-keybindings",
   "displayName": "Dynamic Keybindings",
   "description": "Dynamic Keybindings is an extension for Visual Studio Code that allows you to create and manage dynamic keyboard shortcut profiles. With this tool, you can define custom groups of keybindings and activate or deactivate them using simple commands, adapting your development environment to your needs and improving your typing productivity.",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "engines": {
     "vscode": "^1.97.0"
   },
@@ -69,7 +69,7 @@
         "command": "workbench.action.showCommands"
       },
       {
-        "key": "ctrl+k",
+        "key": "ctrl+alt+z",
         "command": "dynamic-keybindings.toggle"
       },
       {
@@ -112,7 +112,191 @@
         "key": "1",
         "command": "type",
         "args": {
-          "text": "Hello from Default Profile!"
+          "text": "!"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "2",
+        "command": "type",
+        "args": {
+          "text": "\""
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "3",
+        "command": "type",
+        "args": {
+          "text": "#"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "4",
+        "command": "type",
+        "args": {
+          "text": "$"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "5",
+        "command": "type",
+        "args": {
+          "text": "%"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "6",
+        "command": "type",
+        "args": {
+          "text": "&"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "7",
+        "command": "type",
+        "args": {
+          "text": "/"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "8",
+        "command": "type",
+        "args": {
+          "text": "("
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "9",
+        "command": "type",
+        "args": {
+          "text": ")"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "0",
+        "command": "type",
+        "args": {
+          "text": "="
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "shift+1",
+        "command": "type",
+        "args": {
+          "text": "1"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "shift+2",
+        "command": "type",
+        "args": {
+          "text": "2"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "shift+3",
+        "command": "type",
+        "args": {
+          "text": "3"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "shift+4",
+        "command": "type",
+        "args": {
+          "text": "4"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "shift+5",
+        "command": "type",
+        "args": {
+          "text": "5"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "shift+6",
+        "command": "type",
+        "args": {
+          "text": "6"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "shift+7",
+        "command": "type",
+        "args": {
+          "text": "7"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "shift+8",
+        "command": "type",
+        "args": {
+          "text": "8"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "shift+9",
+        "command": "type",
+        "args": {
+          "text": "9"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "shift+0",
+        "command": "type",
+        "args": {
+          "text": "0"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": ",",
+        "command": "type",
+        "args": {
+          "text": ";"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "shift+,",
+        "command": "type",
+        "args": {
+          "text": ","
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "ctrl+shift+,",
+        "command": "type",
+        "args": {
+          "text": "<"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "ctrl+shift+.",
+        "command": "type",
+        "args": {
+          "text": ">"
         },
         "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
       },
