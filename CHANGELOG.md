@@ -11,8 +11,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Support for dynamic commands with system actions (not the same as key mapping)
 - Create command function integrated with the WebView
 - Error handling to avoid duplicated redirected keys or commands in one profile
-### Modified
-
 
 ## [0.6.3] - 2025-04-16
 ### Added
