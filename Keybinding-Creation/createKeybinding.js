@@ -18,7 +18,18 @@ function activate(context) {
         }
       );
 
+      // Get all available commands
+      const commands = await vscode.commands.getCommands(true);
+      const sortedCommands = commands.sort();
+
       panel.webview.html = getWebviewContent();
+
+      // Send initial data to the webview
+      panel.webview.postMessage({
+        command: 'initializeData',
+        profiles,
+        commands: sortedCommands
+      });
 
       panel.webview.onDidReceiveMessage(
         message => {
@@ -40,9 +51,6 @@ function activate(context) {
         undefined,
         context.subscriptions
       );
-
-      // Send initial profiles to the webview
-      panel.webview.postMessage({ command: 'updateProfiles', profiles });
     })
   );
 }
@@ -105,7 +113,10 @@ function getWebviewContent() {
         <input type="text" id="commandKey" name="commandKey" required>
         <p class="example-text">Example: ctrl+alt+shift+a</p>
         <label for="commandAction">Command Action:</label>
-        <input type="text" id="commandAction" name="commandAction" required>
+        <select id="commandAction" name="commandAction" required>
+          <option value="">Select a command...</option>
+        </select>
+        <input type="text" id="commandFilter" placeholder="Filter commands...">
         <p class="example-text">Example: workbench.action.showCommands</p>
         <label for="commandProfileParameter">Active Profile:</label>
         <select id="commandProfileParameter" name="commandProfileParameter"></select>
@@ -169,40 +180,72 @@ function getWebviewContent() {
           document.getElementById('commandForm').reset();
         });
 
-        // Update profiles in the UI
+        // Handle command filtering and selection
+        const commandSelect = document.getElementById('commandAction');
+        const commandFilter = document.getElementById('commandFilter');
+        let allCommands = [];
+
         window.addEventListener('message', (event) => {
           const message = event.data;
-          if (message.command === 'updateProfiles') {
+          if (message.command === 'initializeData') {
             const profiles = message.profiles;
-            profileList.innerHTML = '';
-            activeProfileSelect.innerHTML = '';
-            const commandProfileSelect = document.getElementById('commandProfileParameter');
-            commandProfileSelect.innerHTML = '';
+            allCommands = message.commands;
             
-            // Show/hide ad message based on profiles count
-            const adMessage = document.getElementById('adMessage');
-            adMessage.style.display = Object.keys(profiles).length >= 8 ? 'block' : 'none';
+            // Populate commands
+            populateCommands(allCommands);
             
-            for (const [id, name] of Object.entries(profiles)) {
-              const li = document.createElement('li');
-              li.textContent = \`\${name} (\${id})\`;
-              li.innerHTML += \` <button class="delete-profile" data-profile-id="\${id}">Delete</button>\`;
-              profileList.appendChild(li);
-
-              // Add option to keybinding select
-              const option1 = document.createElement('option');
-              option1.value = id;
-              option1.textContent = name;
-              activeProfileSelect.appendChild(option1);
-
-              // Add option to command select
-              const option2 = document.createElement('option');
-              option2.value = id;
-              option2.textContent = name;
-              commandProfileSelect.appendChild(option2);
-            }
+            // Update profiles
+            updateProfiles(profiles);
           }
         });
+
+        function populateCommands(commands) {
+          commandSelect.innerHTML = '<option value="">Select a command...</option>';
+          commands.forEach(cmd => {
+            const option = document.createElement('option');
+            option.value = cmd;
+            option.textContent = cmd;
+            commandSelect.appendChild(option);
+          });
+        }
+
+        commandFilter.addEventListener('input', (e) => {
+          const filterText = e.target.value.toLowerCase();
+          const filteredCommands = allCommands.filter(cmd => 
+            cmd.toLowerCase().includes(filterText)
+          );
+          populateCommands(filteredCommands);
+        });
+
+        function updateProfiles(profiles) {
+          profileList.innerHTML = '';
+          activeProfileSelect.innerHTML = '';
+          const commandProfileSelect = document.getElementById('commandProfileParameter');
+          commandProfileSelect.innerHTML = '';
+          
+          // Show/hide ad message based on profiles count
+          const adMessage = document.getElementById('adMessage');
+          adMessage.style.display = Object.keys(profiles).length >= 8 ? 'block' : 'none';
+          
+          for (const [id, name] of Object.entries(profiles)) {
+            const li = document.createElement('li');
+            li.textContent = \`\${name} (\${id})\`;
+            li.innerHTML += \` <button class="delete-profile" data-profile-id="\${id}">Delete</button>\`;
+            profileList.appendChild(li);
+
+            // Add option to keybinding select
+            const option1 = document.createElement('option');
+            option1.value = id;
+            option1.textContent = name;
+            activeProfileSelect.appendChild(option1);
+
+            // Add option to command select
+            const option2 = document.createElement('option');
+            option2.value = id;
+            option2.textContent = name;
+            commandProfileSelect.appendChild(option2);
+          }
+        }
       </script>
     </body>
     </html>
