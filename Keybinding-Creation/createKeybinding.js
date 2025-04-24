@@ -51,7 +51,7 @@ function activate(context) {
               panel.webview.postMessage({ command: 'displayKeybindings', keybindings });
               return;
             case 'deleteKeybinding':
-              deleteKeybinding(message.index, context);
+              deleteKeybinding(message, context);
               return;
             case 'reloadWebview':
               vscode.commands.executeCommand('dynamic-keybindings.openWebview');
@@ -71,7 +71,7 @@ function getWebviewContent() {
     <html lang="en">
     <head>
       <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="viewport" width="device-width, initial-scale=1.0">
       <title>Dynamic Keybindings</title>
       <style>
         body { font-family: Arial, sans-serif; padding: 20px; }
@@ -263,7 +263,11 @@ function getWebviewContent() {
               const deleteButton = document.createElement('button');
               deleteButton.textContent = 'Delete';
               deleteButton.onclick = () => {
-                vscode.postMessage({ command: 'deleteKeybinding', index });
+                vscode.postMessage({ 
+                  command: 'deleteKeybinding', 
+                  key: kb.key,
+                  profileCondition: kb.when
+                });
               };
               
               div.appendChild(details);
@@ -493,7 +497,7 @@ async function createCommand(commandKey, commandAction, activeProfileParameter) 
   }
 }
 
-function deleteKeybinding(index, context) {
+function deleteKeybinding(message, context) {
   const keybindingsFilePath = path.join(__dirname, '../package.json');
 
   try {
@@ -501,7 +505,18 @@ function deleteKeybinding(index, context) {
     const packageJson = JSON.parse(fileContent);
     const keybindings = packageJson.contributes.keybindings;
 
-    // Remove the keybinding at the specified index
+    // Find the index of the keybinding to delete
+    const index = keybindings.findIndex(kb =>
+      kb.key === message.key &&
+      kb.when === message.profileCondition
+    );
+
+    if (index === -1) {
+      vscode.window.showErrorMessage('Keybinding not found');
+      return false;
+    }
+
+    // Remove the keybinding at the found index
     keybindings.splice(index, 1);
 
     // Update package.json

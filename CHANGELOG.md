@@ -6,11 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-## [0.7.2] - 2025-04-23
+## [0.8.1] - 2025-04-24
+### Fixed
+- Delete buttons on the list of keybinding erase the first on the command list instead of the selected one
+
+## [0.8.0] - 2025-04-24
 ### Added
 - Print Keybindings button
 - Delete keybinding function via button in each printed keybinding
 - Refresh page button
+### Changed
+- Updated README.md to match the actual state of the app
 
 ## [0.7.1] - 2025-04-23
 ### Added
