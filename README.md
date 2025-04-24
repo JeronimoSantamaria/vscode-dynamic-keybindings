@@ -1,17 +1,64 @@
 # Dynamic Keybindings
 
-Dynamic Keybindings is a future extension for Visual Studio Code that will empower developers to create and manage dynamic keyboard shortcut profiles. In upcoming releases, it will allow users to define custom sets of keybindings and toggle these profiles on and off through simple commands, adapting their coding environment to meet diverse workflow needs.
+Dynamic Keybindings is a Visual Studio Code extension that empowers developers to create and manage dynamic keyboard shortcut profiles. It allows users to define custom sets of keybindings and toggle these profiles on and off through simple commands, adapting their coding environment to meet diverse workflow needs.
 
-With Dynamic Keybindings, you will be able to:
-- **Create Multiple Profiles:** Define various keybinding sets tailored to different projects or coding tasks.
-- **Seamlessly Switch Contexts:** Activate or deactivate profiles on the fly, ensuring that the most relevant shortcuts are always available.
-- **Enhance Productivity:** Reduce repetitive keystrokes and streamline your development process by personalizing your workspace.
-- **Enhace Pair Programming** Allows two users to work on the same device with different profiles.
+## Features
+- **Create Multiple Profiles:** 
+    - Define various keybinding sets tailored to different projects or coding tasks through an intuitive user interface.
+- **Dynamic Key Mapping:** 
+  - Remap single keys to different characters or text snippets
+  - Create custom command shortcuts within each profile
+  - Real-time key mapping with minimal delay
+- **Profile Management:**
+  - Seamlessly switch between profiles using keyboard shortcuts (Ctrl+Shift+1-9)
+  - Toggle all dynamic keybindings on/off with a single command (Ctrl+Alt+Z)
+  - Create, modify, and delete profiles through a user-friendly interface
+- **User Interface:**
+  - Easy-to-use WebView interface for managing profiles and keybindings
+  - Visual feedback through the VS Code status bar showing current profile and state
+  - Searchable command list when creating new command shortcuts
+- **Default Profile:** Comes with a pre-configured default profile optimized for programming tasks
 
-The extension will focus on flexibility and user customization, offering an easy configuration process to match your unique workflow. In the future, additional features such as profile import/export, advanced configuration options, and community-driven enhancements will be integrated.
+## Installation (Not Released yet)
+- Install the extension from the VS Code marketplace
+- Access the Dynamic Keybindings interface through the command palette
+- Start creating your custom keybinding profiles
 
-Dynamic Keybindings is designed to transform your VS Code environment into a personalized productivity powerhouse. Stay tuned for updates and further improvements as this project evolves to meet the dynamic needs of modern development.
+## Usage
 
----
+### Managing Profiles
+1. "Open Dynamic Keybindings Webview" in the command palette
+2. Create new profiles using the "Add Profile" button
+3. Switch between profiles using Ctrl+Shift+1-9 or through commands
+4. Toggle all keybindings on/off using Ctrl+Alt+Z
 
-This project is developed with comprehensive documentation of the software development life cycle and an agile approach. While this documentation is private, it is available upon request for professional purposes.
+### Creating Keybindings
+1. Open the Dynamic Keybindings interface
+2. Choose between creating a key mapping or a command shortcut
+3. For key mapping:
+   - Enter the key to be remapped
+   - Specify the destination text
+   - Select the profile
+4. For command shortcuts:
+   - Enter the key combination
+   - Select a VS Code command from the searchable list
+   - Choose the target profile
+
+### Viewing Keybindings
+- Use the "Print Keybindings" feature to view all keybindings in a profile
+- Delete individual keybindings directly from the view
+
+## Default Profile
+The extension comes with a default profile (P0) that includes common programming-related key mappings to improve typing efficiency:
+- Numbers (1-9) remapped to common programming symbols
+- Shift+Numbers return the original numbers
+- Additional command shortcuts for common VS Code actions
+
+## License
+This project is licensed under the GNU General Public License v3.0 with additional terms. See the [LICENSE](LICENSE.md) file for details.
+
+## Contributing
+Contributions are welcome! Please feel free to submit issues and pull requests.
+
+## Support
+For questions, issues, or feature requests, please create an issue in the GitHub repository or contact jeronimo.s.santamaria@gmail.com

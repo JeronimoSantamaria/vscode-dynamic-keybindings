@@ -2,7 +2,7 @@
   "name": "dynamic-keybindings",
   "displayName": "Dynamic Keybindings",
   "description": "Dynamic Keybindings is an extension for Visual Studio Code that allows you to create and manage dynamic keyboard shortcut profiles. With this tool, you can define custom groups of keybindings and activate or deactivate them using simple commands, adapting your development environment to your needs and improving your typing productivity.",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "license": "GPL-3.0",
   "engines": {
     "vscode": "^1.97.0"
@@ -218,14 +218,6 @@
         "command": "type",
         "args": {
           "text": "4"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
-      },
-      {
-        "key": "shift+5",
-        "command": "type",
-        "args": {
-          "text": "5"
         },
         "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
       },

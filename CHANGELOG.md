@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.7.2] - 2025-04-23
+### Added
+- Print Keybindings button
+- Delete keybinding function via button in each printed keybinding
+- Refresh page button
+
 ## [0.7.1] - 2025-04-23
 ### Added
 - Added a searchable dropdown list of VS Code commands when creating new commands

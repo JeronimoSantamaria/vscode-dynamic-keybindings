@@ -46,6 +46,16 @@ function activate(context) {
             case 'deleteProfile':
               deleteProfile(message.profileId, context);
               return;
+            case 'getProfileKeybindings':
+              const keybindings = getProfileKeybindings(message.profileId);
+              panel.webview.postMessage({ command: 'displayKeybindings', keybindings });
+              return;
+            case 'deleteKeybinding':
+              deleteKeybinding(message.index, context);
+              return;
+            case 'reloadWebview':
+              vscode.commands.executeCommand('dynamic-keybindings.openWebview');
+              return;
           }
         },
         undefined,
@@ -81,47 +91,85 @@ function getWebviewContent() {
           font-size: 14px;
         }
         .example-text { font-size: 12px; color: #666; margin-top: -8px; margin-bottom: 10px; }
+        .sticky-header {
+          position: sticky;
+          top: 0;
+          padding: 10px 0;
+          z-index: 100;
+          display: flex;
+          justify-content: flex-end;
+        }
+        .refresh-button {
+          background: #007acc;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          margin: 10px 0;
+          position: fixed;
+          top: 10px;
+          right: 20px;
+          z-index: 1000;
+        }
+        .refresh-button:hover {
+          background: #005999;
+        }
+        .main-content {
+          margin-top: 60px;
+        }
       </style>
     </head>
     <body>
-      <h1>Dynamic Keybindings</h1>
-      <p>Manage your profiles and create custom keybindings.</p>
-      
-      <h2>Profiles</h2>
-      <ul id="profileList"></ul>
-      <input type="text" id="newProfileName" placeholder="New Profile Name">
-      <button id="addProfileButton">Add Profile</button>
-
-      <div id="adMessage">
-        <p><strong>Warning:</strong> You have reach the maximum (9) of predefine activate profiles commands, if you add one more, you will have to define it manually in package.json</p>
+      <div class="sticky-header">
+        <button class="refresh-button" id="refreshTop">Refresh View</button>
       </div>
+      <div class="main-content">
+        <h1>Dynamic Keybindings</h1>
+        <p>Manage your profiles and create custom keybindings.</p>
+        
+        <h2>Profiles</h2>
+        <ul id="profileList"></ul>
+        <input type="text" id="newProfileName" placeholder="New Profile Name">
+        <button id="addProfileButton">Add Profile</button>
 
-      <h2>Create Keybinding</h2>
-      <form id="keybindingForm">
-        <label for="redirectedKey">Redirected Key:</label>
-        <input type="text" id="redirectedKey" name="redirectedKey" required> 
-        <label for="destinationText">Destination Text:</label>
-        <input type="text" id="destinationText" name="destinationText" required>
-        <label for="activeProfileParameter">Active Profile:</label>
-        <select id="activeProfileParameter" name="activeProfileParameter"></select>
-        <button type="submit">Create Keybinding</button>
-      </form>
+        <div id="adMessage">
+          <p><strong>Warning:</strong> You have reach the maximum (9) of predefine activate profiles commands, if you add one more, you will have to define it manually in package.json</p>
+        </div>
 
-      <h2>Create Command</h2>
-      <form id="commandForm">
-        <label for="commandKey">Key:</label>
-        <input type="text" id="commandKey" name="commandKey" required>
-        <p class="example-text">Example: ctrl+alt+shift+a</p>
-        <label for="commandAction">Command Action:</label>
-        <select id="commandAction" name="commandAction" required>
-          <option value="">Select a command...</option>
-        </select>
-        <input type="text" id="commandFilter" placeholder="Filter commands...">
-        <p class="example-text">Example: workbench.action.showCommands</p>
-        <label for="commandProfileParameter">Active Profile:</label>
-        <select id="commandProfileParameter" name="commandProfileParameter"></select>
-        <button type="submit">Create Command</button>
-      </form>
+        <h2>Create Keybinding</h2>
+        <form id="keybindingForm">
+          <label for="redirectedKey">Redirected Key:</label>
+          <input type="text" id="redirectedKey" name="redirectedKey" required> 
+          <label for="destinationText">Destination Text:</label>
+          <input type="text" id="destinationText" name="destinationText" required>
+          <label for="activeProfileParameter">Active Profile:</label>
+          <select id="activeProfileParameter" name="activeProfileParameter"></select>
+          <button type="submit">Create Keybinding</button>
+        </form>
+
+        <h2>Create Command</h2>
+        <form id="commandForm">
+          <label for="commandKey">Key:</label>
+          <input type="text" id="commandKey" name="commandKey" required>
+          <p class="example-text">Example: ctrl+alt+shift+a</p>
+          <label for="commandAction">Command Action:</label>
+          <select id="commandAction" name="commandAction" required>
+            <option value="">Select a command...</option>
+          </select>
+          <input type="text" id="commandFilter" placeholder="Filter commands...">
+          <p class="example-text">Example: workbench.action.showCommands</p>
+          <label for="commandProfileParameter">Active Profile:</label>
+          <select id="commandProfileParameter" name="commandProfileParameter"></select>
+          <button type="submit">Create Command</button>
+        </form>
+
+        <h2>View Profile Keybindings</h2>
+        <div>
+          <select id="viewProfileSelect"></select>
+          <button id="printKeybindings">Print Keybindings</button>
+        </div>
+        <div id="keybindingsList"></div>
+      </div>
 
       <script>
         const vscode = acquireVsCodeApi();
@@ -196,6 +244,32 @@ function getWebviewContent() {
             
             // Update profiles
             updateProfiles(profiles);
+          } else if (message.command === 'displayKeybindings') {
+            const keybindingsList = document.getElementById('keybindingsList');
+            keybindingsList.innerHTML = '';
+            
+            message.keybindings.forEach((kb, index) => {
+              const div = document.createElement('div');
+              div.style.margin = '10px 0';
+              div.style.padding = '10px';
+              div.style.border = '1px solid #ccc';
+              
+              const details = document.createElement('p');
+              details.textContent = 'Key: ' + kb.key + ' | Command: ' + kb.command;
+              if (kb.args) {
+                details.textContent += ' | Text: ' + kb.args.text;
+              }
+              
+              const deleteButton = document.createElement('button');
+              deleteButton.textContent = 'Delete';
+              deleteButton.onclick = () => {
+                vscode.postMessage({ command: 'deleteKeybinding', index });
+              };
+              
+              div.appendChild(details);
+              div.appendChild(deleteButton);
+              keybindingsList.appendChild(div);
+            });
           }
         });
 
@@ -245,7 +319,29 @@ function getWebviewContent() {
             option2.textContent = name;
             commandProfileSelect.appendChild(option2);
           }
+
+          // Update view profile selector
+          const viewProfileSelect = document.getElementById('viewProfileSelect');
+          viewProfileSelect.innerHTML = '';
+          for (const [id, name] of Object.entries(profiles)) {
+            const option = document.createElement('option');
+            option.value = id;
+            option.textContent = name;
+            viewProfileSelect.appendChild(option);
+          }
         }
+
+        document.getElementById('printKeybindings').addEventListener('click', () => {
+          const profileId = document.getElementById('viewProfileSelect').value;
+          vscode.postMessage({ command: 'getProfileKeybindings', profileId });
+        });
+
+        // Add refresh functionality
+        function refreshWebview() {
+          vscode.postMessage({ command: 'reloadWebview' });
+        }
+
+        document.getElementById('refreshTop').addEventListener('click', refreshWebview);
       </script>
     </body>
     </html>
@@ -394,6 +490,43 @@ async function createCommand(commandKey, commandAction, activeProfileParameter) 
     }
   } else {
     vscode.window.showErrorMessage('All fields are required to create a command.');
+  }
+}
+
+function deleteKeybinding(index, context) {
+  const keybindingsFilePath = path.join(__dirname, '../package.json');
+
+  try {
+    let fileContent = fs.readFileSync(keybindingsFilePath, 'utf8');
+    const packageJson = JSON.parse(fileContent);
+    const keybindings = packageJson.contributes.keybindings;
+
+    // Remove the keybinding at the specified index
+    keybindings.splice(index, 1);
+
+    // Update package.json
+    packageJson.contributes.keybindings = keybindings;
+    fs.writeFileSync(keybindingsFilePath, JSON.stringify(packageJson, null, 2), 'utf8');
+
+    vscode.window.showInformationMessage('Keybinding deleted successfully!');
+    return true;
+  } catch (error) {
+    vscode.window.showErrorMessage(`Failed to delete keybinding: ${error.message}`);
+    return false;
+  }
+}
+
+function getProfileKeybindings(profileId) {
+  const keybindingsFilePath = path.join(__dirname, '../package.json');
+  try {
+    const fileContent = fs.readFileSync(keybindingsFilePath, 'utf8');
+    const packageJson = JSON.parse(fileContent);
+    return packageJson.contributes.keybindings.filter(kb =>
+      kb.when && kb.when.includes(`activeProfile == '${profileId}'`)
+    );
+  } catch (error) {
+    vscode.window.showErrorMessage(`Failed to read keybindings: ${error.message}`);
+    return [];
   }
 }
 
