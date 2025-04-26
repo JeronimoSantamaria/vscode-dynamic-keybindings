@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.8.2] - 2025-04-26
+### Added
+- Now deleteProfile also deletes all the keybindings related to the target profile
+- Confirmation messages before deleting a profile
+
 ## [0.8.1] - 2025-04-24
 ### Fixed
 - Delete buttons on the list of keybinding erase the first on the command list instead of the selected one

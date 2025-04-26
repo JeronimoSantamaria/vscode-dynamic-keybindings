@@ -379,15 +379,45 @@ function addProfile(profileName, context) {
   vscode.window.showInformationMessage(`Profile "${profileName}" added. Use Command Palette to access it.`);
 }
 
-function deleteProfile(profileId, context) {
-  if (profiles[profileId]) {
+async function deleteProfile(profileId, context) {
+  if (!profiles[profileId]) {
+    vscode.window.showErrorMessage(`Profile "${profileId}" does not exist.`);
+    return;
+  }
+
+  const profileName = profiles[profileId];
+  const confirmed = await vscode.window.showWarningMessage(
+    `Are you sure you want to delete "${profileName}"? This action cannot be undone and it will delete all related keybindings to this profile.`,
+    'Yes', 'No'
+  );
+
+  if (confirmed !== 'Yes') {
+    return;
+  }
+
+  // Delete related keybindings
+  const keybindingsFilePath = path.join(__dirname, '../package.json');
+  try {
+    let fileContent = fs.readFileSync(keybindingsFilePath, 'utf8');
+    const packageJson = JSON.parse(fileContent);
+    const keybindings = packageJson.contributes.keybindings;
+
+    // Filter out keybindings related to this profile
+    packageJson.contributes.keybindings = keybindings.filter(kb =>
+      !kb.when || !kb.when.includes(`activeProfile == '${profileId}'`)
+    );
+
+    // Save the updated keybindings
+    fs.writeFileSync(keybindingsFilePath, JSON.stringify(packageJson, null, 2), 'utf8');
+
+    // Delete the profile
     delete profiles[profileId];
     saveProfiles(context);
 
     vscode.window.activeTextEditor?.webview?.postMessage({ command: 'updateProfiles', profiles });
-    vscode.window.showInformationMessage(`Profile "${profileId}" deleted.`);
-  } else {
-    vscode.window.showErrorMessage(`Profile "${profileId}" does not exist.`);
+    vscode.window.showInformationMessage(`Profile "${profileName}" and its keybindings were deleted successfully.`);
+  } catch (error) {
+    vscode.window.showErrorMessage(`Failed to delete profile: ${error.message}`);
   }
 }
 
