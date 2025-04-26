@@ -76,7 +76,9 @@ function getWebviewContent() {
       <style>
         body { font-family: Arial, sans-serif; padding: 20px; }
         input, select { display: block; margin-bottom: 10px; width: 100%; padding: 8px; max-width: 220px;}
-        button { padding: 10px 20px; margin-right: 10px; }
+        button { padding: 10px 20px; margin-right: 10px; width: 160px; }
+        button.delete-profile { width: auto; padding: 5px 10px; margin: 0; }
+        .refresh-button { width: auto; }
         #profileList { max-width: 220px; padding: 0; }
         #profileList li { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
         .delete-profile { padding: 5px 10px; margin: 0; }
