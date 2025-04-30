@@ -17,7 +17,7 @@
     "commands": [
       {
         "command": "dynamic-keybindings.toggle",
-        "title": "Toggle Dynamic Keybindings"
+        "title": "Dynamic Keybindings: Toggle Extension On/Off"
       },
       {
         "command": "dynamic-keybindings.P0",
@@ -61,7 +61,11 @@
       },
       {
         "command": "dynamic-keybindings.openWebview",
-        "title": "Open Dynamic Keybindings Webview"
+        "title": "Dynamic Keybindings: Open Webview"
+      },
+      {
+        "command": "dynamic-keybindings.showSetup",
+        "title": "Dynamic Keybindings: Show Setup Wizard"
       }
     ],
     "keybindings": [
@@ -318,6 +322,14 @@
         "key": "ctrl+shift+d",
         "command": "workbench.action.terminal.toggleTerminal",
         "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
+      },
+      {
+        "key": "ctrl+shift+alt+d",
+        "command": "type",
+        "args": {
+          "text": "#include <iostream> \nusing namespace std; \n\nint main() {\n\n}"
+        },
+        "when": "dynamicKeybindingsEnabled && activeProfile == 'P2'"
       }
     ]
   },
