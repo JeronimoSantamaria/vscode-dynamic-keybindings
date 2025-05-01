@@ -59,7 +59,7 @@ function getWizardContent() {
                 max-width: 100%;
                 margin: 10px 0;
             }
-            .example-box1 {
+            .example-box-step1 {
                 background: var(--vscode-editor-background);
                 border: 1px solid var(--vscode-editorWidget-border);
                 padding: 10px;
@@ -67,22 +67,13 @@ function getWizardContent() {
                 border-radius: 5px;
                 max-width: 500px;
             }
-            .example-box2 {
+            .example-box-step3 {
                 background: var(--vscode-editor-background);
                 border: 1px solid var(--vscode-editorWidget-border);
                 padding: 10px;
                 margin: 10px 0;
                 border-radius: 5px;
-                width: 280px;
-            }
-            .flex-container {
-                display: flex;
-                gap: 10px;
-                align-items: flex-start;
-            }
-            .box-description {
-                flex: 1;
-                padding: 10px;
+                width: 400px;
             }
         </style>
     </head>
@@ -94,18 +85,17 @@ function getWizardContent() {
             <ul>
                 <li>Profiles: Sets of custom keybindings, you can switch between</li>
                 <li>Key Mappings: Remap single keys to different characters or full texts</li>
-                <div class="example-box1">
+                <div class="example-box-step1">
                     <h4>Example:</h4>
                     <p>Pressing <span class="shortcut">h</span> can be remapped to type <span class="shortcut">"Hello, World!"</span>.</p>
                 </div>
                 
                 <li>Command Shortcuts: Create custom keyboard shortcuts for VS Code commands</li>
-                <div class="example-box1">
+                <div class="example-box-step1">
                     <h4>Example:</h4>
                     <p>Pressing <span class="shortcut">Ctrl+K</span> can be remapped to execute a VS Code command like <span class="shortcut">Save File</span>.</p>
                 </div>
             </ul>
-            <p>Note: For formating reasons, please watch this setup in full window</p>
         </div>
 
         <div class="step" id="step2">
@@ -120,133 +110,124 @@ function getWizardContent() {
             <h2>Managing Profiles</h2>
             <p>You can:</p>
             <ul>
+                <li>Toggle extension: <span class="shortcut">Ctrl+Alt+Z</span></li>
                 <li>Switch profiles: <span class="shortcut">Ctrl+Shift+1-9</span></li>
                 <li>Create new profiles through the Dynamic Keybindings interface</li>
                 <li>Delete profiles you don't need</li>
                 <li>Check your profiles keybindings and make sure they have all you need</li>
+                <li>Open interface: Command Palette → "Dynamic Keybindings: Open Webview"</li>
             </ul>
             <p>Open the interface with: <span class="shortcut">Ctrl+Shift+P</span> and type "Dynamic Keybindings: Open Webview"</p>
         </div>
+
 
         <div class="step" id="step3">
             <h2>Interface Overview</h2>
             <p>The Dynamic Keybindings interface provides all the tools you need:</p>
             <ul>
                 <b><li>Create and manage profiles</li></b>
-                <div class="flex-container">
-                    <div class="example-box2">
-                        <h4>Example: Managing Profiles</h4>
-                        <p>Add a new profile:</p>
-                        <div style="display: flex; gap: 10px; align-items: center;">
-                            <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">Default Profile</span>
-                            <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Delete</span>
-                        </div>
-                        <br>
-                        <div style="display: flex; gap: 10px; align-items: center;">
-                            <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">Cpp Profile</span>
-                        </div>
-                        <div style="display: flex; gap: 10px; align-items: center;">
-                            <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Add Profile</span>    
-                        </div>
+                <div class="example-box-step3">
+                    <h4>Example: Managing Profiles</h4>
+                    <p>Add a new profile:</p>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">Default Profile</span>
+                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Delete</span>
                     </div>
-                    <div class="box-description">
-                        <br><br><br>
-                        <p>Your existing profiles will be dispayed like this, if you click <span class="shortcut">Delete</span> you will get a confirmation message, if you agree, the profile will be delete it along with all the related keybidings</p>
-                        <br>
-                        <p>To create a new profile, you will be given a text field to enter the name of the new profile, after filling the field you are ready to click <span class="shortcut">Add Profile</span></p>
+                    <p><em>Your existing profiles will be displayed like this. Clicking <span class="shortcut">Delete</span> will show a confirmation message. If you agree, the profile and all related keybindings will be deleted.</em></p>
+
+                    <br>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">Cpp Profile</span>
                     </div>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Add Profile</span>    
+                    </div>
+                    <p><em>To create a new profile, enter the name in the text field and click the button, your new profile will have impact after restart VS Code.</em></p>
                 </div>
                 <br>
                 <b><li>Add key mappings</li></b>
-                <div class="flex-container">
-                    <div class="example-box2">
-                        <h4>Creating a Key Mapping</h4>
-                        <p>Redirected key:</p>
-                        <div style="margin-bottom: 8px;">
-                            <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">h</span>
-                        </div>
-                        <p>Destination text:</p>
-                        <div style="margin-bottom: 8px;">
-                            <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">"Hello, World!"</span>    
-                        </div>
-                        <p>Active Profile:</p>
-                        <div style="margin-bottom: 8px;">
-                            <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Default Profile</span>    
-                        </div>
-                        <div style="margin-bottom: 8px;">
-                            <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Create Keybinding</span>    
-                        </div>
+                <div class="example-box-step3">
+                    <h4>Creating a Key Mapping</h4>
+                    <p>Redirected key:</p>
+                    <div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">h</span>
                     </div>
-                    <div class="box-description">
-                        <br><br><br><br>
-                        <p>Text field to enter a key or key combination to redirect to text</p>
-                        <br>
-                        <p>Text field that will be typed after pressing the keys</p>
-                        <br>
-                        <p>Selectable menu to chose in which menu the keybinding will be activated</p>
+                    <p><em>Text field to enter a key or key combination to redirect to text.</em></p>
+
+                    <p>Destination text:</p>
+                    <div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">"Hello, World!"</span>    
                     </div>
+                    <p><em>Text field to define what will be typed after pressing the keys.</em></p>
+                    
+                    <p>Active Profile:</p>
+                    <div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Default Profile</span>    
+                    </div>
+                    <div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Create Keybinding</span>    
+                    </div>
+                    <p><em>Selectable menu to choose in which profile the keybinding will be activated.</em></p>
                 </div>
+
                 <br>
                 <b><li>Add command shortcuts</li></b>
-                <div class="flex-container">
-                    <div class="example-box2">
-                        <h4>Creating a command shortcut:</h4>
-                        <p>Shortcut</p>
-                        <div style="margin-bottom: 8px;">
-                            <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">ctrl+shift+z</span>
-                        </div>
-                        <p>Command Action</p>
-                        <div style="margin-bottom: 8px;">
-                            <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Redo</span>    
-                        </div>
-                        <div style="margin-bottom: 8px;">
-                            <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">Redo</span>    
-                        </div>
-                        <p>Active Profile:</p>
-                        <div style="margin-bottom: 8px;">
-                            <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Default Profile</span>    
-                        </div>
-                        <div style="margin-bottom: 8px;">
-                            <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Create Command</span>    
-                        </div>
+                <div class="example-box-step3">
+                    <h4>Creating a command shortcut:</h4>
+                    <p>Shortcut</p>
+                    <div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">ctrl+shift+z</span>
                     </div>
-                    <div class="box-description">
-                        <br><br><br><br>
-                        <p>Text field to enter a key combination to trigger the command action</p>
-                        <br>
-                        <p>You will be given a selectable menu and a text field, the text field will be useful to filter between VS Code action commands, in the selctable menu you will chose the action to execute</p>
-                        <br><br>
-                        <p>Selectable menu to chose in which menu the keybinding will be activated</p>
+                    <p><em>Text field to enter a key combination to trigger the command action.</em></i></p>
+                    
+                    <p>Command Action</p>
+                    <div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Redo</span>    
                     </div>
+                    <div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">Redo</span>    
+                    </div>
+                    <p><em>You will be given a selectable menu and a text field to filter VS Code action commands.</em></p>
+
+                    <p>Active Profile:</p>
+                    <div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Default Profile</span>    
+                    </div>
+                    <div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Create Command</span>    
+                    </div>
+                    <p><em>Selectable menu to choose in which profile the keybinding will be activated.</em></p>
                 </div>
 
                 <br>
                 <b><li>View and delete existing keybindings</li></b>
-                <div class="example-box2">
+                <div class="example-box-step3">
                     <h4>Example: Managing Keybindings</h4>
                     <div style="border: 1px solid var(--vscode-input-border); padding: 8px; margin: 5px 0;">
                         <p style="margin: 0 0 5px 0"><b>Key:</b> h <br> <b>Command:</b> type <br> <b>Text:</b> "Hello, World!"</p>
                         <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 2px 6px; font-size: 12px;">Delete</span>
-                        <br><br>
+                        <p><em>This is a more readable example of how your keybindings will be listed, is this case, one key to a whole text</em></p>
+                        <br>
                         <p style="margin: 0 0 5px 0"><b>Key:</b> ctrl+j <br> <b>Command:</b> type <br> <b>Text:</b> "console.log()"</p>
                         <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 2px 6px; font-size: 12px;">Delete</span>
-                        <br><br>
+                        <p><em>You can also put shortcuts to text</em></p>
+                        <br>
                         <p style="margin: 0 0 5px 0"><b>Key:</b> ctrl+shift+z <br> <b>Command:</b> Redo</p>
                         <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 2px 6px; font-size: 12px;">Delete</span>
+                        <p><em>If the keybinding is a command shortcut, it will just show you the shortcut and the command action</em></p>
                     </div>
                 </div>
             </ul>
-            <p>Note: New profiles or keybindings will have impact after restarting VS Code</p>
-            <p>Tip: Use the refresh button if you don't see your changes immediately.</p>
         </div>
 
         <div class="step" id="step4">
             <h2>Ready to Start!</h2>
-            <p>You're all set to use Dynamic Keybindings. Remember:</p>
+            <p>You're all set to use Dynamic Keybindings, but first I will give you some tips to make the most of the app:</p>
             <ul>
-                <li>Toggle extension: <span class="shortcut">Ctrl+Alt+Z</span></li>
-                <li>Switch profiles: <span class="shortcut">Ctrl+Shift+1-9</span></li>
-                <li>Open interface: Command Palette → "Dynamic Keybindings: Open Webview"</li>
+                <li>New profiles or keybindings will have impact after restarting VS Code.</li>
+                <li>Use the refresh button if you don't see your changes immediately.</li>
+                <li>You can also use key mapping to introduce long text through a command, for example <span class="shortcut">ctrl+shift+alt+c</span> to write "#include iostream \\n using namespace std; \\n\\n int main() {\\n\\n}", the usual C++ start</li>
+                <li>If you set an already existant native shortcut of VS Code it will execute the latest one, that means, if you have your profile active, it will execute your command, if the profile is not active, it will execute the native VSC command</li>
             </ul>
             <p>Check the README.md file for detailed documentation.</p>
         </div>

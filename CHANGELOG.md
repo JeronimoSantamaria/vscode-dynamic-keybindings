@@ -6,7 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-## [0.9.1] - 2025-04-30
+## [0.9.2] - 2025-05-01
+### Added
+- Useful tips on the final page to improve typing efficiency even more
+### Changed
+- Now the explanatory texts will be under each section instead of outside the example box due to CPU charge and better readability
+
+## [0.9.1] - 2025-05-01
 ### Added
 - Explainatory texts after the example boxes for users to be clear about every function
 
