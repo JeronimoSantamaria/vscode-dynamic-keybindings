@@ -69,7 +69,39 @@ function getWizardContent() {
             <ul>
                 <li>Profiles: Sets of custom keybindings you can switch between</li>
                 <li>Key Mappings: Remap single keys to different characters or full texts</li>
+                <div class="example-box">
+                    <h4>Example:</h4>
+                    <p>Pressing <span class="shortcut">h</span> can be remapped to type <span class="shortcut">"Hello, World!"</span>.</p>
+                </div>
+                <style>
+                    .example-box {
+                        background: var(--vscode-editor-background);
+                        border: 1px solid var(--vscode-editorWidget-border);
+                        padding: 10px;
+                        margin-top: 10px;
+                        border-radius: 5px;
+                    }
+                    .example-box h4 {
+                        margin: 0 0 5px 0;
+                    }
+                </style>
                 <li>Command Shortcuts: Create custom keyboard shortcuts for VS Code commands</li>
+                <div class="example-box">
+                    <h4>Example:</h4>
+                    <p>Pressing <span class="shortcut">Ctrl+K</span> can be remapped to execute a VS Code command like <span class="shortcut">Save File</span>.</p>
+                </div>
+                <style>
+                    .example-box {
+                        background: var(--vscode-editor-background);
+                        border: 1px solid var(--vscode-editorWidget-border);
+                        padding: 10px;
+                        margin-top: 10px;
+                        border-radius: 5px;
+                    }
+                    .example-box h4 {
+                        margin: 0 0 5px 0;
+                    }
+                </style>
             </ul>
         </div>
 
@@ -98,9 +130,65 @@ function getWizardContent() {
             <p>The Dynamic Keybindings interface provides all the tools you need:</p>
             <ul>
                 <li>Create and manage profiles</li>
-                <li>Add key mappings and command shortcuts</li>
+                <div class="example-box">
+                    <h4>Example: Managing Profiles</h4>
+                    <p>Add a new profile:</p>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">Default Profile</span>
+                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Delete</span>
+                        <br>
+                        <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">Cpp Profile</span>
+                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Add Profile</span>
+                    </div>
+                </div>
+                <li>Add key mappings</li>
+                <div class="example-box">
+                    <h4>Creating a Key Mapping</h4>
+                    <p>Redirected key:</p>
+                    <div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">h</span>
+                    <p>Destination text:</p>
+                    <div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">"Hello, World!"</span>    
+                    </div>
+                    <p>Active Profile:</p>
+                    <div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Default Profile</span>    
+                    </div><div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Create Keybinding</span>    
+                    </div>
+                </div>
+                <li>Add command shortcuts</li>
+                <div class="example-box">
+                    <h4>Creating a command shortcut:</h4>
+                    <p>Shortcut</p>
+                    <div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">ctrl+shift+z</span>
+                    <p>Command Action</p>
+                    <div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Redo</span>    
+                    </div>
+                    <div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">Redo</span>    
+                    </div>
+                    <p>Active Profile:</p>
+                    <div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Default Profile</span>    
+                    </div>
+                    </div><div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Create Command</span>    
+                    </div>
+                </div>
                 <li>View and delete existing keybindings</li>
+                <div class="example-box">
+                    <h4>Example: Managing Keybindings</h4>
+                    <div style="border: 1px solid var(--vscode-input-border); padding: 8px; margin: 5px 0;">
+                        <p style="margin: 0 0 5px 0">Key: ctrl+j | Command: type | Text: "console.log()"</p>
+                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 2px 6px; font-size: 12px;">Delete</span>
+                    </div>
+                </div>
             </ul>
+            <p>Note: New profiles or keybindings will have impact after restarting VS Code</p>
             <p>Tip: Use the refresh button if you don't see your changes immediately.</p>
         </div>
 
