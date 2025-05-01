@@ -80,10 +80,10 @@ function getWizardContent() {
     <body>
         <div class="step active" id="step1">
             <h2>Welcome to Dynamic Keybindings!</h2>
-            <p>This wizard will help you get started with the extension.</p>
+            <p>This wizard will help you to understand all the tools in the extension.</p>
             <h3>Basic Concepts:</h3>
             <ul>
-                <li>Profiles: Sets of custom keybindings, you can switch between</li>
+                <li>Profiles: Sets of custom keybindings you can switch between</li>
                 <li>Key Mappings: Remap single keys to different characters or full texts</li>
                 <div class="example-box-step1">
                     <h4>Example:</h4>
@@ -187,7 +187,7 @@ function getWizardContent() {
                     <div style="margin-bottom: 8px;">
                         <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">Redo</span>    
                     </div>
-                    <p><em>You will be given a selectable menu and a text field to filter VS Code action commands.</em></p>
+                    <p><em>Select a VS Code command from the dropdown menu. Use the filter textbox to search for specific commands.</em></p>
 
                     <p>Active Profile:</p>
                     <div style="margin-bottom: 8px;">
@@ -225,9 +225,10 @@ function getWizardContent() {
             <p>You're all set to use Dynamic Keybindings, but first I will give you some tips to make the most of the app:</p>
             <ul>
                 <li>New profiles or keybindings will have impact after restarting VS Code.</li>
-                <li>Use the refresh button if you don't see your changes immediately.</li>
+                <li>Use the refresh button if you don't see your changes immediately in the interface.</li>
                 <li>You can also use key mapping to introduce long text through a command, for example <span class="shortcut">ctrl+shift+alt+c</span> to write "#include iostream \\n using namespace std; \\n\\n int main() {\\n\\n}", the usual C++ start</li>
                 <li>If you set an already existant native shortcut of VS Code it will execute the latest one, that means, if you have your profile active, it will execute your command, if the profile is not active, it will execute the native VSC command</li>
+                <li>If you want to modify the code by your own hand, you will find a guide of where and what is each component of the extension on the Github repository</li>
             </ul>
             <p>Check the README.md file for detailed documentation.</p>
         </div>
