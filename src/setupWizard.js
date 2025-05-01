@@ -153,10 +153,9 @@ function getWizardContent() {
                         <br><br><br>
                         <p>Your existing profiles will be dispayed like this, if you click <span class="shortcut">Delete</span> you will get a confirmation message, if you agree, the profile will be delete it along with all the related keybidings</p>
                         <br>
-                        <p>To create a new profile, you will be given a text box to enter the name of the new profile, after filling the field you are ready to click <span class="shortcut">Add Profile</span></p>
+                        <p>To create a new profile, you will be given a text field to enter the name of the new profile, after filling the field you are ready to click <span class="shortcut">Add Profile</span></p>
                     </div>
                 </div>
-
                 <br>
                 <b><li>Add key mappings</li></b>
                 <div class="flex-container">
@@ -179,32 +178,48 @@ function getWizardContent() {
                         </div>
                     </div>
                     <div class="box-description">
-                        <p>Map any key to output custom text. Perfect for common code snippets, function templates, or frequently used expressions.</p>
+                        <br><br><br><br>
+                        <p>Text field to enter a key or key combination to redirect to text</p>
+                        <br>
+                        <p>Text field that will be typed after pressing the keys</p>
+                        <br>
+                        <p>Selectable menu to chose in which menu the keybinding will be activated</p>
                     </div>
                 </div>
                 <br>
                 <b><li>Add command shortcuts</li></b>
-                <div class="example-box2">
-                    <h4>Creating a command shortcut:</h4>
-                    <p>Shortcut</p>
-                    <div style="margin-bottom: 8px;">
-                        <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">ctrl+shift+z</span>
+                <div class="flex-container">
+                    <div class="example-box2">
+                        <h4>Creating a command shortcut:</h4>
+                        <p>Shortcut</p>
+                        <div style="margin-bottom: 8px;">
+                            <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">ctrl+shift+z</span>
+                        </div>
+                        <p>Command Action</p>
+                        <div style="margin-bottom: 8px;">
+                            <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Redo</span>    
+                        </div>
+                        <div style="margin-bottom: 8px;">
+                            <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">Redo</span>    
+                        </div>
+                        <p>Active Profile:</p>
+                        <div style="margin-bottom: 8px;">
+                            <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Default Profile</span>    
+                        </div>
+                        <div style="margin-bottom: 8px;">
+                            <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Create Command</span>    
+                        </div>
                     </div>
-                    <p>Command Action</p>
-                    <div style="margin-bottom: 8px;">
-                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Redo</span>    
-                    </div>
-                    <div style="margin-bottom: 8px;">
-                        <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">Redo</span>    
-                    </div>
-                    <p>Active Profile:</p>
-                    <div style="margin-bottom: 8px;">
-                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Default Profile</span>    
-                    </div>
-                    <div style="margin-bottom: 8px;">
-                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Create Command</span>    
+                    <div class="box-description">
+                        <br><br><br><br>
+                        <p>Text field to enter a key combination to trigger the command action</p>
+                        <br>
+                        <p>You will be given a selectable menu and a text field, the text field will be useful to filter between VS Code action commands, in the selctable menu you will chose the action to execute</p>
+                        <br><br>
+                        <p>Selectable menu to chose in which menu the keybinding will be activated</p>
                     </div>
                 </div>
+
                 <br>
                 <b><li>View and delete existing keybindings</li></b>
                 <div class="example-box2">
