@@ -6,6 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.9.2] - 2025-05-01
+### Added
+- Useful tips on the final page to improve typing efficiency even more
+### Changed
+- Now the explanatory texts will be under each section instead of outside the example box due to CPU charge and better readability
+
+## [0.9.1] - 2025-05-01
+### Added
+- Explainatory texts after the example boxes for users to be clear about every function
+
+## [0.9.0] - 2025-04-30
+### Added
+- Setup wizard for new users
+- Command to show setup wizard at any time
+### Changed
+- Principal webview font to "Cascadia Code", on process to search a good font pre-instaled in all systems
+### Fixed
+- Resolved an issue where the maximum pre-defined commands warning was triggered prematurely.
+
 ## [0.8.2] - 2025-04-26
 ### Added
 - Now deleteProfile also deletes all the keybindings related to the target profile

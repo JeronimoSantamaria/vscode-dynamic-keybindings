@@ -74,7 +74,7 @@ function getWebviewContent() {
       <meta name="viewport" width="device-width, initial-scale=1.0">
       <title>Dynamic Keybindings</title>
       <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
+        body { font-family: Cascadia Code, Arial, sans-serif; padding: 20px; }
         input, select { display: block; margin-bottom: 10px; width: 100%; padding: 8px; max-width: 220px;}
         button { padding: 10px 20px; margin-right: 10px; width: 160px; }
         button.delete-profile { width: auto; padding: 5px 10px; margin: 0; }
@@ -138,7 +138,7 @@ function getWebviewContent() {
           <p><strong>Warning:</strong> You have reach the maximum (9) of predefine activate profiles commands, if you add one more, you will have to define it manually in package.json</p>
         </div>
 
-        <h2>Create Keybinding</h2>
+        <h2>Create Key Mapping</h2>
         <form id="keybindingForm">
           <label for="redirectedKey">Redirected Key:</label>
           <input type="text" id="redirectedKey" name="redirectedKey" required> 
@@ -149,7 +149,7 @@ function getWebviewContent() {
           <button type="submit">Create Keybinding</button>
         </form>
 
-        <h2>Create Command</h2>
+        <h2>Create Command Shortcut</h2>
         <form id="commandForm">
           <label for="commandKey">Key:</label>
           <input type="text" id="commandKey" name="commandKey" required>
@@ -305,7 +305,7 @@ function getWebviewContent() {
           
           // Show/hide ad message based on profiles count
           const adMessage = document.getElementById('adMessage');
-          adMessage.style.display = Object.keys(profiles).length >= 8 ? 'block' : 'none';
+          adMessage.style.display = Object.keys(profiles).length >= 9 ? 'block' : 'none';
           
           for (const [id, name] of Object.entries(profiles)) {
             const li = document.createElement('li');
