@@ -185,7 +185,7 @@ function getWebviewContent() {
           <div id="nativeKeybindingsList"></div>
         </div>
 
-        <h2>Add Special Shortcuts</h2>
+        <br><b>Add Special Shortcuts</b>
         <form id="specialShortcutForm">
           <label for="shortcutType">Command Type:</label>
           <select id="shortcutType" required>
@@ -285,15 +285,21 @@ function getWebviewContent() {
               div.style.margin = '10px 0';
               div.style.padding = '10px';
               div.style.border = '1px solid #ccc';
+              div.style.display = 'flex';
+              div.style.flexDirection = 'column';
+              div.style.gap = '10px';
               
-              const details = document.createElement('p');
-              details.textContent = 'Key: ' + kb.key + ' | Command: ' + kb.command;
+              const details = document.createElement('div');
+              let text = \`Key: \${kb.key} \n Command: \${kb.command}\`;
               if (kb.args) {
-                details.textContent += ' | Text: ' + kb.args.text;
+                text += \` \nText: \${ kb.args.text } \`;
               }
+              details.textContent = text;
+              details.style.whiteSpace = 'pre-line';
               
               const deleteButton = document.createElement('button');
               deleteButton.textContent = 'Delete';
+              deleteButton.style.alignSelf = 'flex-start';
               deleteButton.onclick = () => {
                 vscode.postMessage({ 
                   command: 'deleteKeybinding', 
@@ -316,19 +322,21 @@ function getWebviewContent() {
               div.style.padding = '10px';
               div.style.border = '1px solid #ccc';
               div.style.display = 'flex';
-              div.style.justifyContent = 'space-between';
-              div.style.alignItems = 'center';
+              div.style.flexDirection = 'column';
+              div.style.gap = '10px';
               
-              const details = document.createElement('span');
-              details.textContent = \`Key: \${kb.key} | Command: \${kb.command}\`;
+              const details = document.createElement('div');
+              details.textContent = \`Key: \${kb.key} \n Command: \${kb.command}\`;
+              details.style.whiteSpace = 'pre-line';
               
               const deleteButton = document.createElement('button');
               deleteButton.textContent = 'Delete';
+              deleteButton.style.alignSelf = 'flex-start';
               deleteButton.onclick = () => {
                 vscode.postMessage({ 
                   command: 'deleteKeybinding',
                   key: kb.key,
-                  profileCondition: undefined // undefined for native keybindings
+                  profileCondition: undefined
                 });
               };
               
