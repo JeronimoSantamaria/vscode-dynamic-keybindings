@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.10.0] - 2025-05-06
+### Added
+- Added support for configuring native extension commands through the webview interface
+
 ## [0.9.2] - 2025-05-01
 ### Added
 - Useful tips on the final page to improve typing efficiency even more

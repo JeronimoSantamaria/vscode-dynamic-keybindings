@@ -56,6 +56,13 @@ function activate(context) {
             case 'reloadWebview':
               vscode.commands.executeCommand('dynamic-keybindings.openWebview');
               return;
+            case 'getNativeKeybindings':
+              const nativeKeybindings = getNativeKeybindings();
+              panel.webview.postMessage({ command: 'displayNativeKeybindings', keybindings: nativeKeybindings });
+              return;
+            case 'addSpecialShortcut':
+              addSpecialShortcut(message);
+              return;
           }
         },
         undefined,
@@ -74,7 +81,7 @@ function getWebviewContent() {
       <meta name="viewport" width="device-width, initial-scale=1.0">
       <title>Dynamic Keybindings</title>
       <style>
-        body { font-family: Cascadia Code, Arial, sans-serif; padding: 20px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; }
         input, select { display: block; margin-bottom: 10px; width: 100%; padding: 8px; max-width: 220px;}
         button { padding: 10px 20px; margin-right: 10px; width: 160px; }
         button.delete-profile { width: auto; padding: 5px 10px; margin: 0; }
@@ -171,6 +178,29 @@ function getWebviewContent() {
           <button id="printKeybindings">Print Keybindings</button>
         </div>
         <div id="keybindingsList"></div>
+
+        <h2>Native Keybindings</h2>
+        <div>
+          <button id="printNativeKeybindings">View Native Keybindings</button>
+          <div id="nativeKeybindingsList"></div>
+        </div>
+
+        <h2>Add Special Shortcuts</h2>
+        <form id="specialShortcutForm">
+          <label for="shortcutType">Command Type:</label>
+          <select id="shortcutType" required>
+            <option value="toggle">Toggle Dynamic Keybindings</option>
+            <option value="profile">Activate Profile</option>
+          </select>
+          <div id="profileSelection" style="display: none;">
+            <label for="profileId">Profile:</label>
+            <select id="profileId"></select>
+          </div>
+          <label for="shortcutKey">Key Combination:</label>
+          <input type="text" id="shortcutKey" required>
+          <p class="example-text">Example: ctrl+shift+p</p>
+          <button type="submit">Add Shortcut</button>
+        </form>
       </div>
 
       <script>
@@ -276,6 +306,36 @@ function getWebviewContent() {
               div.appendChild(deleteButton);
               keybindingsList.appendChild(div);
             });
+          } else if (message.command === 'displayNativeKeybindings') {
+            const nativeList = document.getElementById('nativeKeybindingsList');
+            nativeList.innerHTML = '';
+            
+            message.keybindings.forEach(kb => {
+              const div = document.createElement('div');
+              div.style.margin = '10px 0';
+              div.style.padding = '10px';
+              div.style.border = '1px solid #ccc';
+              div.style.display = 'flex';
+              div.style.justifyContent = 'space-between';
+              div.style.alignItems = 'center';
+              
+              const details = document.createElement('span');
+              details.textContent = \`Key: \${kb.key} | Command: \${kb.command}\`;
+              
+              const deleteButton = document.createElement('button');
+              deleteButton.textContent = 'Delete';
+              deleteButton.onclick = () => {
+                vscode.postMessage({ 
+                  command: 'deleteKeybinding',
+                  key: kb.key,
+                  profileCondition: undefined // undefined for native keybindings
+                });
+              };
+              
+              div.appendChild(details);
+              div.appendChild(deleteButton);
+              nativeList.appendChild(div);
+            });
           }
         });
 
@@ -335,6 +395,16 @@ function getWebviewContent() {
             option.textContent = name;
             viewProfileSelect.appendChild(option);
           }
+
+          // Update profile selection for special shortcuts
+          const profileSelection = document.getElementById('profileId');
+          profileSelection.innerHTML = '';
+          for (const [id, name] of Object.entries(profiles)) {
+            const option = document.createElement('option');
+            option.value = id;
+            option.textContent = name;
+            profileSelection.appendChild(option);
+          }
         }
 
         document.getElementById('printKeybindings').addEventListener('click', () => {
@@ -348,6 +418,30 @@ function getWebviewContent() {
         }
 
         document.getElementById('refreshTop').addEventListener('click', refreshWebview);
+
+        // Add handlers for native keybindings
+        document.getElementById('printNativeKeybindings').addEventListener('click', () => {
+          vscode.postMessage({ command: 'getNativeKeybindings' });
+        });
+
+        document.getElementById('shortcutType').addEventListener('change', (e) => {
+          const profileSelection = document.getElementById('profileSelection');
+          profileSelection.style.display = e.target.value === 'profile' ? 'block' : 'none';
+        });
+
+        document.getElementById('specialShortcutForm').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const type = document.getElementById('shortcutType').value;
+          const key = document.getElementById('shortcutKey').value;
+          const profileId = document.getElementById('profileId').value;
+          
+          vscode.postMessage({
+            command: 'addSpecialShortcut',
+            shortcutType: type,
+            key: key,
+            profileId: type === 'profile' ? profileId : undefined
+          });
+        });
       </script>
     </body>
     </html>
@@ -540,7 +634,7 @@ function deleteKeybinding(message, context) {
     // Find the index of the keybinding to delete
     const index = keybindings.findIndex(kb =>
       kb.key === message.key &&
-      kb.when === message.profileCondition
+      (message.profileCondition === undefined ? !kb.when : kb.when === message.profileCondition)
     );
 
     if (index === -1) {
@@ -574,6 +668,39 @@ function getProfileKeybindings(profileId) {
   } catch (error) {
     vscode.window.showErrorMessage(`Failed to read keybindings: ${error.message}`);
     return [];
+  }
+}
+
+function getNativeKeybindings() {
+  const keybindingsFilePath = path.join(__dirname, '../package.json');
+  try {
+    const fileContent = fs.readFileSync(keybindingsFilePath, 'utf8');
+    const packageJson = JSON.parse(fileContent);
+    return packageJson.contributes.keybindings.filter(kb => !kb.when);
+  } catch (error) {
+    vscode.window.showErrorMessage(`Failed to read native keybindings: ${error.message}`);
+    return [];
+  }
+}
+
+async function addSpecialShortcut(message) {
+  const keybindingsFilePath = path.join(__dirname, '../package.json');
+  try {
+    let fileContent = fs.readFileSync(keybindingsFilePath, 'utf8');
+    const packageJson = JSON.parse(fileContent);
+
+    const newKeybinding = {
+      key: message.key,
+      command: message.shortcutType === 'toggle'
+        ? 'dynamic-keybindings.toggle'
+        : `dynamic-keybindings.${message.profileId}`
+    };
+
+    packageJson.contributes.keybindings.push(newKeybinding);
+    fs.writeFileSync(keybindingsFilePath, JSON.stringify(packageJson, null, 2), 'utf8');
+    vscode.window.showInformationMessage('Special shortcut added successfully!');
+  } catch (error) {
+    vscode.window.showErrorMessage(`Failed to add special shortcut: ${error.message}`);
   }
 }
 
