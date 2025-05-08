@@ -96,12 +96,12 @@ function getWebviewContent() {
         }
 
         h1 {
-          font-size: 2.3rem;
+          font-size: 2rem;
           margin-bottom: 1rem;
         }
 
         h2 {
-          font-size: 1.7rem;
+          font-size: 1.5rem;
           margin: 1.5rem 0 1rem;
         }
 
@@ -134,107 +134,153 @@ function getWebviewContent() {
           padding: 10px 0;
           z-index: 100;
           display: flex;
-          justify-content: flex-end;
+          justify-content: space-between;
+          align-items: center;
+          background-color: Var(--vscode-editor-background);
+          width: 100%;
         }
-        .refresh-button {
-          background: #007acc;
-          color: white;
-          border: none;
-          border-radius: 4px;
+        .sticky-header h1 {
           cursor: pointer;
-          margin: 10px 0;
-          position: fixed;
-          top: 10px;
-          right: 20px;
-          z-index: 1000;
+          margin: 0;
+          user-select: none;
+          position: relative;
+          display: inline-block;
+          padding-bottom: 2px;
         }
-        .refresh-button:hover {
-          background: #005999;
+        .sticky-header h1::after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 2px;
+          bottom: 0;
+          left: 0;
+          background-color: currentColor;
+          opacity: 0.4;
+        }
+        .sticky-header h1:hover {
+          color: #007acc;
+        }
+        .sticky-header h1:hover::after {
+          opacity: 1;
         }
         .main-content {
-          margin-top: 60px;
+          margin-top: 20px;
         }
         #keybindingsList, #nativeKeybindingsList {
           max-width: 600px;
           overflow-x: auto;
         }
+        .section-content {
+          display: block;
+          transition: all 0.3s ease;
+        }
+
+        .section-header {
+          cursor: pointer;
+          user-select: none;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .section-header::before {
+          content: '▼';
+          font-size: 0.8em;
+          transition: transform 0.3s ease;
+        }
+
+        .section-header.collapsed::before {
+          transform: rotate(-90deg);
+        }
+
+        .collapsed + .section-content {
+          display: none;
+        }
       </style>
     </head>
     <body>
       <div class="sticky-header">
-        <button class="refresh-button" id="refreshTop">Refresh View</button>
+        <h1 id="refreshTitle">Dynamic Keybindings</h1>
       </div>
-      <div class="main-content">
-        <h1>Dynamic Keybindings</h1>
-        <p>Manage your profiles and create custom keybindings.</p>
-        
-        <h2>Profiles</h2>
-        <ul id="profileList"></ul>
-        <input type="text" id="newProfileName" placeholder="New Profile Name">
-        <button id="addProfileButton">Add Profile</button>
 
-        <div id="adMessage">
-          <p><strong>Warning:</strong> You have reach the maximum (9) of predefine activate profiles commands, if you add one more, you will have to define it manually in package.json</p>
-        </div>
+      <div class="main-content">        
+        <h2 class="section-header collapsed">Profiles</h2>
+        <div class="section-content">
+          <ul id="profileList"></ul>
+          <input type="text" id="newProfileName" placeholder="New Profile Name">
+          <button id="addProfileButton">Add Profile</button>
 
-        <h2>Create Key Mapping</h2>
-        <p>Redirect keys to save time writing long texts</p>
-        <form id="keybindingForm">
-          <label for="redirectedKey">Redirected Key:</label>
-          <input type="text" id="redirectedKey" name="redirectedKey" required> 
-          <label for="destinationText">Destination Text:</label>
-          <input type="text" id="destinationText" name="destinationText" required>
-          <label for="activeProfileParameter">Active Profile:</label>
-          <select id="activeProfileParameter" name="activeProfileParameter"></select>
-          <button type="submit">Create Keybinding</button>
-        </form>
-
-        <h2>Create Command Shortcut</h2>
-        <p>Create new commands to specific occasions</p>
-        <form id="commandForm">
-          <label for="commandKey">Key:</label>
-          <input type="text" id="commandKey" name="commandKey" required>
-          <p class="example-text">Example: ctrl+alt+shift+a</p>
-          <label for="commandAction">Command Action:</label>
-          <input type="text" id="commandFilter" placeholder="Filter commands...">
-          <select id="commandAction" name="commandAction" required>
-            <option value="">Select a command...</option>
-          </select>
-          <label for="commandProfileParameter">Active Profile:</label>
-          <select id="commandProfileParameter" name="commandProfileParameter"></select>
-          <button type="submit">Create Command</button>
-        </form>
-
-        <h2>View Profile Keybindings</h2>
-        <p>Check your profiles to ensure that is perfect for you</p>
-        <div>
-          <select id="viewProfileSelect"></select>
-          <button id="printKeybindings">Print Keybindings</button>
-        </div>
-        <div id="keybindingsList"></div>
-
-        <h2>Native Keybindings</h2>
-        <p>See and change how to toggle the extension and change profiles</p>
-        <div>
-          <button id="printNativeKeybindings">View Native Keybindings</button>
-          <div id="nativeKeybindingsList"></div>
-        </div>
-        <br>
-        <form id="specialShortcutForm">
-          <label for="shortcutType">Command Type:</label>
-          <select id="shortcutType" required>
-            <option value="toggle">Toggle Dynamic Keybindings</option>
-            <option value="profile">Activate Profile</option>
-          </select>
-          <div id="profileSelection" style="display: none;">
-            <label for="profileId">Profile:</label>
-            <select id="profileId"></select>
+          <div id="adMessage">
+            <p><strong>Warning:</strong> You have reach the maximum (9) of predefine activate profiles commands, if you add one more, you will have to define it manually in package.json</p>
           </div>
-          <label for="shortcutKey">Key Combination:</label>
-          <input type="text" id="shortcutKey" required>
-          <p class="example-text">Example: ctrl+shift+p</p>
-          <button type="submit">Add Shortcut</button>
-        </form>
+        </div>
+
+        <h2 class="section-header collapsed">Create Key Mapping</h2>
+        <div class="section-content">
+          <p>Redirect keys to save time writing long texts</p>
+          <form id="keybindingForm">
+            <label for="redirectedKey">Redirected Key:</label>
+            <input type="text" id="redirectedKey" name="redirectedKey" required> 
+            <label for="destinationText">Destination Text:</label>
+            <input type="text" id="destinationText" name="destinationText" required>
+            <label for="activeProfileParameter">Active Profile:</label>
+            <select id="activeProfileParameter" name="activeProfileParameter"></select>
+            <button type="submit">Create Keybinding</button>
+          </form>
+        </div>
+
+        <h2 class="section-header collapsed">Create Command Shortcut</h2>
+        <div class="section-content">
+          <p>Create new commands to specific occasions</p>
+          <form id="commandForm">
+            <label for="commandKey">Key:</label>
+            <input type="text" id="commandKey" name="commandKey" required>
+            <p class="example-text">Example: ctrl+alt+shift+a</p>
+            <label for="commandAction">Command Action:</label>
+            <input type="text" id="commandFilter" placeholder="Filter commands...">
+            <select id="commandAction" name="commandAction" required>
+              <option value="">Select a command...</option>
+            </select>
+            <label for="commandProfileParameter">Active Profile:</label>
+            <select id="commandProfileParameter" name="commandProfileParameter"></select>
+            <button type="submit">Create Command</button>
+          </form>
+        </div>
+
+        <h2 class="section-header collapsed">View Profile Keybindings</h2>
+        <div class="section-content">
+          <p>Check your profiles to ensure that is perfect for you</p>
+          <div>
+            <select id="viewProfileSelect"></select>
+            <button id="printKeybindings">Print Keybindings</button>
+          </div>
+          <div id="keybindingsList"></div>
+        </div>
+
+        <h2 class="section-header collapsed">Native Keybindings</h2>
+        <div class="section-content">
+          <p>See and change how to toggle the extension and change profiles</p>
+          <div>
+            <button id="printNativeKeybindings">View Native Keybindings</button>
+            <div id="nativeKeybindingsList"></div>
+          </div>
+          <br>
+          <form id="specialShortcutForm">
+            <label for="shortcutType">Command Type:</label>
+            <select id="shortcutType" required>
+              <option value="toggle">Toggle Dynamic Keybindings</option>
+              <option value="profile">Activate Profile</option>
+            </select>
+            <div id="profileSelection" style="display: none;">
+              <label for="profileId">Profile:</label>
+              <select id="profileId"></select>
+            </div>
+            <label for="shortcutKey">Key Combination:</label>
+            <input type="text" id="shortcutKey" required>
+            <p class="example-text">Example: ctrl+shift+p</p>
+            <button type="submit">Add Shortcut</button>
+          </form>
+        </div>
       </div>
 
       <script>
@@ -310,6 +356,9 @@ function getWebviewContent() {
             
             // Update profiles
             updateProfiles(profiles);
+            
+            // Initialize collapsible sections
+            initializeCollapsibleSections();
           } else if (message.command === 'displayKeybindings') {
             const keybindingsList = document.getElementById('keybindingsList');
             keybindingsList.innerHTML = '';
@@ -459,7 +508,7 @@ function getWebviewContent() {
           vscode.postMessage({ command: 'reloadWebview' });
         }
 
-        document.getElementById('refreshTop').addEventListener('click', refreshWebview);
+        document.getElementById('refreshTitle').addEventListener('click', refreshWebview);
 
         // Add handlers for native keybindings
         document.getElementById('printNativeKeybindings').addEventListener('click', () => {
@@ -484,6 +533,26 @@ function getWebviewContent() {
             profileId: type === 'profile' ? profileId : undefined
           });
         });
+
+        function initializeCollapsibleSections() {
+          const headers = document.querySelectorAll('.section-header');
+          
+          headers.forEach(header => {
+            // Hide content initially
+            const content = header.nextElementSibling;
+            if (content && content.classList.contains('section-content')) {
+              content.style.display = 'none';
+            }
+            
+            header.addEventListener('click', () => {
+              header.classList.toggle('collapsed');
+              const content = header.nextElementSibling;
+              if (content && content.classList.contains('section-content')) {
+                content.style.display = header.classList.contains('collapsed') ? 'none' : 'block';
+              }
+            });
+          });
+        }
       </script>
     </body>
     </html>
