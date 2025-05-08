@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.10.1] - 2025-05-08
+### Added
+- Error handling to avoid users to create multiple shortcuts for the same command action
+
 ## [0.10.1] - 2025-05-06
 ### Changed
 - Profile Keybindings and native commands are now displayed with new lines instead of pipelines as separators

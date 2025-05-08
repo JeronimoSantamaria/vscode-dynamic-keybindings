@@ -730,16 +730,37 @@ async function addSpecialShortcut(message) {
   try {
     let fileContent = fs.readFileSync(keybindingsFilePath, 'utf8');
     const packageJson = JSON.parse(fileContent);
+    const keybindings = packageJson.contributes.keybindings;
+
+    const command = message.shortcutType === 'toggle'
+      ? 'dynamic-keybindings.toggle'
+      : `dynamic-keybindings.${message.profileId}`;
+
+    // Check for existing shortcuts
+    const existingShortcut = keybindings.find(kb => kb.command === command);
+    if (existingShortcut) {
+      if (message.shortcutType === 'toggle') {
+        vscode.window.showErrorMessage('A toggle shortcut already exists. Delete the existing one first.');
+      } else {
+        vscode.window.showErrorMessage(`A shortcut for profile ${message.profileId} already exists. Delete the existing one first.`);
+      }
+      return;
+    }
+
+    // Check for duplicate key binding
+    const duplicateKey = keybindings.find(kb => kb.key === message.key);
+    if (duplicateKey) {
+      vscode.window.showErrorMessage(`Key combination "${message.key}" is already used by command "${duplicateKey.command}"`);
+      return;
+    }
 
     const newKeybinding = {
       key: message.key,
-      command: message.shortcutType === 'toggle'
-        ? 'dynamic-keybindings.toggle'
-        : `dynamic-keybindings.${message.profileId}`
+      command: command
     };
 
     packageJson.contributes.keybindings.push(newKeybinding);
-    fs.writeFileSync(keybindingsFilePath, JSON.stringify(packageJson, null, 2), 'utf8');
+    fs.writeFileSync(keybindingsFilePath, JSON.stringify(packageJson, null, -2), 'utf8');
     vscode.window.showInformationMessage('Special shortcut added successfully!');
   } catch (error) {
     vscode.window.showErrorMessage(`Failed to add special shortcut: ${error.message}`);
