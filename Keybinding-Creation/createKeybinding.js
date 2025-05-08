@@ -81,7 +81,35 @@ function getWebviewContent() {
       <meta name="viewport" width="device-width, initial-scale=1.0">
       <title>Dynamic Keybindings</title>
       <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; }
+        :root {
+          font-size: 16px;
+        }
+        
+        body { 
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; 
+        }
+
+        p {
+          font-size: 1rem;
+          line-height: 1;
+          margin: 0.5rem 0;
+        }
+
+        h1 {
+          font-size: 2.3rem;
+          margin-bottom: 1rem;
+        }
+
+        h2 {
+          font-size: 1.7rem;
+          margin: 1.5rem 0 1rem;
+        }
+
+        h3 {
+          font-size: 1.25rem;
+          margin: 1rem 0 0.75rem;
+        }
+
         input, select { display: block; margin-bottom: 10px; width: 100%; padding: 8px; max-width: 220px;}
         button { padding: 10px 20px; margin-right: 10px; width: 160px; }
         button.delete-profile { width: auto; padding: 5px 10px; margin: 0; }
@@ -126,6 +154,10 @@ function getWebviewContent() {
         .main-content {
           margin-top: 60px;
         }
+        #keybindingsList, #nativeKeybindingsList {
+          max-width: 600px;
+          overflow-x: auto;
+        }
       </style>
     </head>
     <body>
@@ -146,6 +178,7 @@ function getWebviewContent() {
         </div>
 
         <h2>Create Key Mapping</h2>
+        <p>Redirect keys to save time writing long texts</p>
         <form id="keybindingForm">
           <label for="redirectedKey">Redirected Key:</label>
           <input type="text" id="redirectedKey" name="redirectedKey" required> 
@@ -157,22 +190,23 @@ function getWebviewContent() {
         </form>
 
         <h2>Create Command Shortcut</h2>
+        <p>Create new commands to specific occasions</p>
         <form id="commandForm">
           <label for="commandKey">Key:</label>
           <input type="text" id="commandKey" name="commandKey" required>
           <p class="example-text">Example: ctrl+alt+shift+a</p>
           <label for="commandAction">Command Action:</label>
+          <input type="text" id="commandFilter" placeholder="Filter commands...">
           <select id="commandAction" name="commandAction" required>
             <option value="">Select a command...</option>
           </select>
-          <input type="text" id="commandFilter" placeholder="Filter commands...">
-          <p class="example-text">Example: workbench.action.showCommands</p>
           <label for="commandProfileParameter">Active Profile:</label>
           <select id="commandProfileParameter" name="commandProfileParameter"></select>
           <button type="submit">Create Command</button>
         </form>
 
         <h2>View Profile Keybindings</h2>
+        <p>Check your profiles to ensure that is perfect for you</p>
         <div>
           <select id="viewProfileSelect"></select>
           <button id="printKeybindings">Print Keybindings</button>
@@ -180,12 +214,12 @@ function getWebviewContent() {
         <div id="keybindingsList"></div>
 
         <h2>Native Keybindings</h2>
+        <p>See and change how to toggle the extension and change profiles</p>
         <div>
           <button id="printNativeKeybindings">View Native Keybindings</button>
           <div id="nativeKeybindingsList"></div>
         </div>
-
-        <br><b>Add Special Shortcuts</b>
+        <br>
         <form id="specialShortcutForm">
           <label for="shortcutType">Command Type:</label>
           <select id="shortcutType" required>
@@ -290,9 +324,9 @@ function getWebviewContent() {
               div.style.gap = '10px';
               
               const details = document.createElement('div');
-              let text = \`Key: \${kb.key} \n Command: \${kb.command}\`;
+              let text = \`Key:  \${kb.key} \n Command:  \${kb.command}\`;
               if (kb.args) {
-                text += \` \nText: \${ kb.args.text } \`;
+                text += \` \nText:  \${ kb.args.text } \`;
               }
               details.textContent = text;
               details.style.whiteSpace = 'pre-line';
@@ -326,7 +360,7 @@ function getWebviewContent() {
               div.style.gap = '10px';
               
               const details = document.createElement('div');
-              details.textContent = \`Key: \${kb.key} \n Command: \${kb.command}\`;
+              details.textContent = \`Key:  \${kb.key} \n Command:  \${kb.command}\`;
               details.style.whiteSpace = 'pre-line';
               
               const deleteButton = document.createElement('button');
