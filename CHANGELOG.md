@@ -6,6 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.11.0] - 2025-05-08
+### Changed
+### Changed
+- Reorganized webview interface with collapsible menus for improved user experience
+- Integrated h1 element into header section for better visual hierarchy
+- Repurposed h1 element as refresh button to enhance functionality
+
+## [0.10.1] - 2025-05-08
+### Added
+- Error handling to avoid users to create multiple shortcuts for the same command action
+
+## [0.10.1] - 2025-05-06
+### Changed
+- Profile Keybindings and native commands are now displayed with new lines instead of pipelines as separators
+
+## [0.10.0] - 2025-05-06
+### Added
+- Added support for configuring native extension commands through the webview interface
+
 ## [0.9.2] - 2025-05-01
 ### Added
 - Useful tips on the final page to improve typing efficiency even more
