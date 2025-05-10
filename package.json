@@ -281,56 +281,6 @@
         },
         "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
       },
-      {
-        "key": "ctrl+shift+,",
-        "command": "type",
-        "args": {
-          "text": "<"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
-      },
-      {
-        "key": "ctrl+shift+.",
-        "command": "type",
-        "args": {
-          "text": ">"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
-      },
-      {
-        "key": "2",
-        "command": "type",
-        "args": {
-          "text": "¯\\_(ツ)_/¯"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'P1'"
-      },
-      {
-        "key": "3",
-        "command": "type",
-        "args": {
-          "text": "Write in C++ with this profile!"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'P2'"
-      },
-      {
-        "key": "ctrl+alt+a",
-        "command": "workbench.action.showCommands",
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
-      },
-      {
-        "key": "ctrl+shift+d",
-        "command": "workbench.action.terminal.toggleTerminal",
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
-      },
-      {
-        "key": "ctrl+shift+alt+d",
-        "command": "type",
-        "args": {
-          "text": "#include <iostream> \nusing namespace std; \n\nint main() {\n\n}"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'P2'"
-      }
     ]
   },
   "main": "./src/extension.js"
