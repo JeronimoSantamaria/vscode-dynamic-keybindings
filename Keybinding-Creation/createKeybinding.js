@@ -5,7 +5,7 @@ const path = require('path');
 let profiles = { P0: 'Default Profile' }; // Dictionary to store profiles
 
 function activate(context) {
-  loadProfiles(context);
+  loadProfiles(context); // Load profiles from VSC global state
 
   context.subscriptions.push(
     vscode.commands.registerCommand('dynamic-keybindings.openWebview', async function () {
@@ -34,6 +34,7 @@ function activate(context) {
       panel.webview.onDidReceiveMessage(
         message => {
           switch (message.command) {
+            // Handle messages from the webview
             case 'createKeybinding':
               createKeybinding(message.redirectedKey, message.destinationText, message.activeProfileParameter);
               return;
@@ -560,15 +561,19 @@ function getWebviewContent() {
 }
 
 function loadProfiles(context) {
+  /* Load profiles from VSC global state
+    If no profiles are found, initialize with a default profile */
   profiles = context.globalState.get('profiles', { P0: 'Default Profile' });
   return profiles;
 }
 
 function saveProfiles(context) {
+  // Save profiles to VSC global state
   context.globalState.update('profiles', profiles);
 }
 
 function addProfile(profileName, context) {
+  //  Checks the length of the profile dictionary in the global state and then add a new profile with the next available ID
   const profileId = `P${Object.keys(profiles).length}`;
   profiles[profileId] = profileName;
   saveProfiles(context);
@@ -582,16 +587,19 @@ function addProfile(profileName, context) {
     }
   }
 
+  // Notify the webview to update the profile list and show a message to the user    
   vscode.window.activeTextEditor?.webview?.postMessage({ command: 'updateProfiles', profiles });
   vscode.window.showInformationMessage(`Profile "${profileName}" added. Use Command Palette to access it.`);
 }
 
 async function deleteProfile(profileId, context) {
+  // Check if the profile exists before attempting to delete it
   if (!profiles[profileId]) {
     vscode.window.showErrorMessage(`Profile "${profileId}" does not exist.`);
     return;
   }
 
+  // Confirm deletion with the user
   const profileName = profiles[profileId];
   const confirmed = await vscode.window.showWarningMessage(
     `Are you sure you want to delete "${profileName}"? This action cannot be undone and it will delete all related keybindings to this profile.`,
@@ -602,14 +610,14 @@ async function deleteProfile(profileId, context) {
     return;
   }
 
-  // Delete related keybindings
+  // Delete keybindings related to the profile
   const keybindingsFilePath = path.join(__dirname, '../package.json');
   try {
     let fileContent = fs.readFileSync(keybindingsFilePath, 'utf8');
     const packageJson = JSON.parse(fileContent);
     const keybindings = packageJson.contributes.keybindings;
 
-    // Filter out keybindings related to this profile
+    // Filter out keybindings related to the deleted profile
     packageJson.contributes.keybindings = keybindings.filter(kb =>
       !kb.when || !kb.when.includes(`activeProfile == '${profileId}'`)
     );
@@ -617,10 +625,11 @@ async function deleteProfile(profileId, context) {
     // Save the updated keybindings
     fs.writeFileSync(keybindingsFilePath, JSON.stringify(packageJson, null, 2), 'utf8');
 
-    // Delete the profile
+    // Delete the profile from the profile dictionary
     delete profiles[profileId];
     saveProfiles(context);
 
+    // Notify the webview to update the profile list and show a message to the user
     vscode.window.activeTextEditor?.webview?.postMessage({ command: 'updateProfiles', profiles });
     vscode.window.showInformationMessage(`Profile "${profileName}" and its keybindings were deleted successfully.`);
   } catch (error) {
@@ -637,7 +646,7 @@ async function createKeybinding(redirectedKey, destinationText, activeProfilePar
       const packageJson = JSON.parse(fileContent);
       const keybindings = packageJson.contributes.keybindings;
 
-      // Check for duplicate key binding with same profile
+      // Check for duplicate keybinding with same profile
       const duplicateKey = keybindings.find(kb =>
         kb.key === redirectedKey &&
         kb.when &&
@@ -649,6 +658,7 @@ async function createKeybinding(redirectedKey, destinationText, activeProfilePar
         return;
       }
 
+      // Template used to create new keybinding (key mapping) and add it to package.json
       const template = `
       {
         "key": "${redirectedKey}", 
@@ -659,11 +669,15 @@ async function createKeybinding(redirectedKey, destinationText, activeProfilePar
         "when": "dynamicKeybindingsEnabled && activeProfile == '${activeProfileParameter}'"
       }`;
 
+      // Adds the template with the given variables to the package.json file
       const lines = fileContent.split('\n');
+      // The line where the new keybinding will be inserted, being -5 after the last keybinding added
       const insertLine = -5;
+      // Ensure that there is a comma before the new keybinding to keep the JSON valid
       lines.splice(insertLine, 0, ',' + template);
       fs.writeFileSync(keybindingsFilePath, lines.join('\n'), 'utf8');
 
+      // Save the changes to package.json
       vscode.commands.executeCommand('workbench.action.files.save').then(() => {
         vscode.window.showInformationMessage('Keybinding created and saved successfully!');
       });
@@ -684,7 +698,7 @@ async function createCommand(commandKey, commandAction, activeProfileParameter) 
       const packageJson = JSON.parse(fileContent);
       const keybindings = packageJson.contributes.keybindings;
 
-      // Check for duplicate key binding with same profile
+      // Check for duplicate shortcut with same profile
       const duplicateKey = keybindings.find(kb =>
         kb.key === commandKey &&
         kb.when &&
@@ -696,7 +710,7 @@ async function createCommand(commandKey, commandAction, activeProfileParameter) 
         return;
       }
 
-      // Check if action is already triggered by another command in same profile
+      // Check if commad action is already triggered by another command in same profile
       const duplicateAction = keybindings.find(kb =>
         kb.command === commandAction &&
         kb.when &&
@@ -711,6 +725,7 @@ async function createCommand(commandKey, commandAction, activeProfileParameter) 
         if (result !== 'Yes') return;
       }
 
+      // Template used to create new command and shortcut and add it to package.json
       const template = `
       {
         "key": "${commandKey}",
@@ -718,11 +733,15 @@ async function createCommand(commandKey, commandAction, activeProfileParameter) 
         "when": "dynamicKeybindingsEnabled && activeProfile == '${activeProfileParameter}'"
       }`;
 
+      // Adds the template with the given variables to the package.json file
       const lines = fileContent.split('\n');
+      // The line where the new keybinding will be inserted, being -5 after the last keybinding added
       const insertLine = -5;
+      // Ensure that there is a comma before the new keybinding to keep the JSON valid
       lines.splice(insertLine, 0, ',' + template);
       fs.writeFileSync(keybindingsFilePath, lines.join('\n'), 'utf8');
 
+      // Save the changes to package.json
       vscode.commands.executeCommand('workbench.action.files.save').then(() => {
         vscode.window.showInformationMessage('Command created and saved successfully!');
       });
@@ -742,7 +761,8 @@ function deleteKeybinding(message, context) {
     const packageJson = JSON.parse(fileContent);
     const keybindings = packageJson.contributes.keybindings;
 
-    // Find the index of the keybinding to delete
+    // Find the index of the keybinding to delete by key and profile condition
+    // If profileCondition is undefined, it means it's a native extension keybinding
     const index = keybindings.findIndex(kb =>
       kb.key === message.key &&
       (message.profileCondition === undefined ? !kb.when : kb.when === message.profileCondition)
@@ -801,11 +821,12 @@ async function addSpecialShortcut(message) {
     const packageJson = JSON.parse(fileContent);
     const keybindings = packageJson.contributes.keybindings;
 
+    // Determine the command based on the shortcut type and is used for the template to add the new extension keybinding
     const command = message.shortcutType === 'toggle'
       ? 'dynamic-keybindings.toggle'
       : `dynamic-keybindings.${message.profileId}`;
 
-    // Check for existing shortcuts
+    // Check for existing extension commands
     const existingShortcut = keybindings.find(kb => kb.command === command);
     if (existingShortcut) {
       if (message.shortcutType === 'toggle') {
@@ -816,7 +837,7 @@ async function addSpecialShortcut(message) {
       return;
     }
 
-    // Check for duplicate key binding
+    // Check for duplicate shortcuts
     const duplicateKey = keybindings.find(kb => kb.key === message.key);
     if (duplicateKey) {
       vscode.window.showErrorMessage(`Key combination "${message.key}" is already used by command "${duplicateKey.command}"`);
