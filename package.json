@@ -70,10 +70,6 @@
     ],
     "keybindings": [
       {
-        "key": "ctrl+.",
-        "command": "workbench.action.showCommands"
-      },
-      {
         "key": "ctrl+alt+z",
         "command": "dynamic-keybindings.toggle"
       },

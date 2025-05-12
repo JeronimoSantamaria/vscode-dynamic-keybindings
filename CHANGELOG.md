@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.11.2] - 2025-05-12
+### Changed 
+- Removed the maximum limit warning for pre-set profile commands as users now have direct control over keybinding management
+### Fixed
+- Refresh the webview now closes the active editor and not just create a new window
+
 ## [0.11.1] - 2025-05-12
 ### Added
 - View Extension Keybindings section to the setup wizard

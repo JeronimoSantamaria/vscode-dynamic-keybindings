@@ -55,6 +55,7 @@ function activate(context) {
               deleteKeybinding(message, context);
               return;
             case 'reloadWebview':
+              vscode.commands.executeCommand('workbench.action.closeActiveEditor')
               vscode.commands.executeCommand('dynamic-keybindings.openWebview');
               return;
             case 'getNativeKeybindings':
@@ -210,10 +211,6 @@ function getWebviewContent() {
           <ul id="profileList"></ul>
           <input type="text" id="newProfileName" placeholder="New Profile Name">
           <button id="addProfileButton">Add Profile</button>
-
-          <div id="adMessage">
-            <p><strong>Warning:</strong> You have reach the maximum (9) of predefine activate profiles commands, if you add one more, you will have to define it manually in package.json</p>
-          </div>
         </div>
 
         <h2 class="section-header collapsed">Create Key Mapping</h2>
@@ -454,10 +451,6 @@ function getWebviewContent() {
           activeProfileSelect.innerHTML = '';
           const commandProfileSelect = document.getElementById('commandProfileParameter');
           commandProfileSelect.innerHTML = '';
-          
-          // Show/hide ad message based on profiles count
-          const adMessage = document.getElementById('adMessage');
-          adMessage.style.display = Object.keys(profiles).length >= 9 ? 'block' : 'none';
           
           for (const [id, name] of Object.entries(profiles)) {
             const li = document.createElement('li');
