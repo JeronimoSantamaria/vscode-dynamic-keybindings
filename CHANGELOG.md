@@ -6,8 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [0.11.1] - 2025-05-12
+### Added
+- View Extension Keybindings section to the setup wizard
+### Fixed
+- Multiple format and typing errors
+
 ## [0.11.0] - 2025-05-08
-### Changed
 ### Changed
 - Reorganized webview interface with collapsible menus for improved user experience
 - Integrated h1 element into header section for better visual hierarchy

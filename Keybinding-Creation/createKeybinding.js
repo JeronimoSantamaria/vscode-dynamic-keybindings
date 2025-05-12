@@ -234,7 +234,7 @@ function getWebviewContent() {
         <div class="section-content">
           <p>Create new commands to specific occasions</p>
           <form id="commandForm">
-            <label for="commandKey">Key:</label>
+            <label for="commandKey">Shortcut:</label>
             <input type="text" id="commandKey" name="commandKey" required>
             <p class="example-text">Example: ctrl+alt+shift+a</p>
             <label for="commandAction">Command Action:</label>
@@ -250,7 +250,7 @@ function getWebviewContent() {
 
         <h2 class="section-header collapsed">View Profile Keybindings</h2>
         <div class="section-content">
-          <p>Check your profiles to ensure that is perfect for you</p>
+          <p>Check your profiles to ensure that they are perfect for you</p>
           <div>
             <select id="viewProfileSelect"></select>
             <button id="printKeybindings">Print Keybindings</button>
@@ -258,11 +258,11 @@ function getWebviewContent() {
           <div id="keybindingsList"></div>
         </div>
 
-        <h2 class="section-header collapsed">Native Keybindings</h2>
+        <h2 class="section-header collapsed">View Extension Keybindings</h2>
         <div class="section-content">
           <p>See and change how to toggle the extension and change profiles</p>
           <div>
-            <button id="printNativeKeybindings">View Native Keybindings</button>
+            <button id="printNativeKeybindings">View Extension Keybindings</button>
             <div id="nativeKeybindingsList"></div>
           </div>
           <br>

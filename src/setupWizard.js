@@ -102,7 +102,7 @@ function getWizardContent() {
             <h2>Profiles</h2>
             <p>The extension comes with a "Default Profile" (ID=P0) that includes:</p>
             <ul>
-                <li>Key Mappings for numbers and some other keys to their corresponding '+shift' equivalent </li>
+                <li>Key Mappings for numbers and some other keys to their corresponding 'shift+' equivalent </li>
                 <li>Shift + Numbers return the original numbers</li>
             </ul>
             <p>If you dont like it, you can always change it in our interface!</p>
@@ -182,12 +182,12 @@ function getWizardContent() {
                     
                     <p>Command Action</p>
                     <div style="margin-bottom: 8px;">
-                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Redo</span>    
-                    </div>
-                    <div style="margin-bottom: 8px;">
                         <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">Redo</span>    
                     </div>
-                    <p><em>Select a VS Code command from the dropdown menu. Use the filter textbox to search for specific commands.</em></p>
+                    <div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Redo</span>    
+                    </div>
+                    <p><em>Select a VS Code command from the dropdown menu. Use the filter text field to search for specific commands.</em></p>
 
                     <p>Active Profile:</p>
                     <div style="margin-bottom: 8px;">
@@ -200,9 +200,9 @@ function getWizardContent() {
                 </div>
 
                 <br>
-                <b><li>View and delete existing keybindings</li></b>
+                <b><li>View and delete existing profile keybindings</li></b>
                 <div class="example-box-step3">
-                    <h4>Example: Managing Keybindings</h4>
+                    <h4>Example: Managing Profile Keybindings</h4>
                     <div style="border: 1px solid var(--vscode-input-border); padding: 8px; margin: 5px 0;">
                         <p style="margin: 0 0 5px 0"><b>Key:</b> h <br> <b>Command:</b> type <br> <b>Text:</b> "Hello, World!"</p>
                         <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 2px 6px; font-size: 12px;">Delete</span>
@@ -217,6 +217,35 @@ function getWizardContent() {
                         <p><em>If the keybinding is a command shortcut, it will just show you the shortcut and the command action</em></p>
                     </div>
                 </div>
+
+                <br>
+                <b><li>View and delete existing extension keybindings</li></b>
+                <div class="example-box-step3">
+                    <h4>Example: Managing Extension Keybindings</h4>
+                    <div style="border: 1px solid var(--vscode-input-border); padding: 8px; margin: 5px 0;">
+                        <p style="margin: 0 0 5px 0"><b>Key:</b> ctrl+alt+z <br> <b>Command:</b> dynamic-keybindings.toggle </p>
+                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 2px 6px; font-size: 12px;">Delete</span>
+                        <p><em>The keybindings will be displayed in the same way, with the exception that the extension keybindings are always ready to use and do not require a profile.</em></p><br>
+                        
+                        <div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Toggle/Change Profile</span>    
+                        </div>
+                        <p><em>Selectable menu to choose which extension keybinding you will add. If you are trying to modify an already existing, delete it before creating it again</em></p><br>
+                        
+                        <div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">Shortcut</span>    
+                        </div>
+                        <p><em>If you choose to create a toggle extension command, the command action will be already set, you just have to enter the new shortcut</p></em><br>
+                        
+                        <div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Default Profile</span>    
+                        </div>
+                        <div style="margin-bottom: 8px;">
+                        <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">Shortcut</span>    
+                        </div>
+                        <p><em>If you choose to create an active profile command, you will be given a dropdown menu with your created profiles to select the one to activate, and a text field for the shortcut</p></em>
+                    </div>
+                </div>
             </ul>
         </div>
 
@@ -225,7 +254,7 @@ function getWizardContent() {
             <p>You're all set to use Dynamic Keybindings, but first I will give you some tips to make the most of the app:</p>
             <ul>
                 <li>New profiles or keybindings will have impact after restarting VS Code.</li>
-                <li>Use the refresh button if you don't see your changes immediately in the interface.</li>
+                <li>Click the extension name in the wbview if you don't see your changes immediately in the interface, this will create another window with the new data loaded</li>
                 <li>You can also use key mapping to introduce long text through a command, for example <span class="shortcut">ctrl+shift+alt+c</span> to write "#include iostream \\n using namespace std; \\n\\n int main() {\\n\\n}", the usual C++ start</li>
                 <li>If you set an already existant native shortcut of VS Code it will execute the latest one, that means, if you have your profile active, it will execute your command, if the profile is not active, it will execute the native VSC command</li>
                 <li>If you want to modify the code by your own hand, you will find a guide of where and what is each component of the extension on the Github repository</li>
