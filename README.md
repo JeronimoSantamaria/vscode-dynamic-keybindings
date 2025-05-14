@@ -2,63 +2,87 @@
 
 Dynamic Keybindings is a Visual Studio Code extension that empowers developers to create and manage dynamic keyboard shortcut profiles. It allows users to define custom sets of keybindings and toggle these profiles on and off through simple commands, adapting their coding environment to meet diverse workflow needs.
 
-## Features
+<br>
+
+## ⭐ Features
 - **Create Multiple Profiles:** 
-    - Define various keybinding sets tailored to different projects or coding tasks through an intuitive user interface.
+    - Define various keybinding sets tailored to different projects or coding tasks
+    - Switch between profiles instantly with keyboard shortcuts
+    - Pre-configured default profile optimized for programming
+    
 - **Dynamic Key Mapping:** 
-  - Remap single keys to different characters or text snippets
-  - Create custom command shortcuts within each profile
-  - Real-time key mapping with minimal delay
+    - Remap single keys to different characters or text snippets
+    - Create custom command shortcuts within each profile
+    - Real-time key mapping with minimal delay
+    
 - **Profile Management:**
-  - Seamlessly switch between profiles using keyboard shortcuts (Ctrl+Shift+1-9)
-  - Toggle all dynamic keybindings on/off with a single command (Ctrl+Alt+Z)
-  - Create, modify, and delete profiles through a user-friendly interface
+    - Toggle all dynamic keybindings on/off (Ctrl+Alt+Z)
+    - Switch between profiles using shortcuts (Ctrl+Shift+1-9)
+    - Create, modify, and delete profiles through UI
+
 - **User Interface:**
-  - Easy-to-use WebView interface for managing profiles and keybindings
-  - Visual feedback through the VS Code status bar showing current profile and state
-  - Searchable command list when creating new command shortcuts
-- **Default Profile:** Comes with a pre-configured default profile optimized for programming tasks
+    - Intuitive WebView interface for all configurations
+    - Visual feedback through VS Code status bar
+    - Searchable command list for shortcuts
 
-## Installation (Not Released yet)
-- Install the extension from the VS Code marketplace
-- Access the Dynamic Keybindings interface through the command palette
-- Start creating your custom keybinding profiles
+<br>
 
-## Usage
+## 🚀 Installation (Not Released yet)
+1. Install from VS Code marketplace
+2. Access through Command Palette (`Ctrl+Shift+P`)
+3. Type "Dynamic Keybindings: Open Webview"
 
-### Managing Profiles
-1. "Open Dynamic Keybindings Webview" in the command palette
-2. Create new profiles using the "Add Profile" button
-3. Switch between profiles using Ctrl+Shift+1-9 or through commands
-4. Toggle all keybindings on/off using Ctrl+Alt+Z
+<br>
 
-### Creating Keybindings
-1. Open the Dynamic Keybindings interface
-2. Choose between creating a key mapping or a command shortcut
-3. For key mapping:
-   - Enter the key to be remapped
-   - Specify the destination text
-   - Select the profile
-4. For command shortcuts:
-   - Enter the key combination
-   - Select a VS Code command from the searchable list
-   - Choose the target profile
+## 📖 Usage
 
-### Viewing Keybindings
-- Use the "Print Keybindings" feature to view all keybindings in a profile
-- Delete individual keybindings directly from the view
+### 🔄 Managing Profiles
+1. Open Command Palette (`Ctrl+Shift+P`)
+2. Type "Dynamic Keybindings: Open Webview"
+3. Use profile management section to:
+   - Create new profiles
+   - Delete existing profiles
 
-## Default Profile
-The extension comes with a default profile (P0) that includes common programming-related key mappings to improve typing efficiency:
-- Numbers (1-9) remapped to common programming symbols
-- Shift+Numbers return the original numbers
-- Additional command shortcuts for common VS Code actions
+### ⌨️ Creating Keybindings
+1. Open Dynamic Keybindings interface
+2. Choose your action:
+   - **Key Mapping:**
+     - Enter key or key combination to remap
+     - Specify destination text
+     - Select target profile
+   - **Command Shortcuts:**
+     - Enter key combination
+     - Select VS Code command
+     - Choose target profile
 
-## License
-This project is licensed under the GNU General Public License v3.0 with additional terms. See the [LICENSE](LICENSE.md) file for details.
+### 👁️ Viewing & Managing
+- Use "Print Keybindings" to view all mappings and commands of a profile
+- Delete individual keybindings through the interface
+- Monitor active profile in VS Code status bar
 
-## Contributing
-Contributions are welcome! Please feel free to submit issues and pull requests.
+### 🎯 Default Profile (P0)
+Pre-configured for programming efficiency:
+- Numbers (1-9) → Common symbols (!"#$%&/()=)
+- Shift+Numbers → Original numbers
+- Comma (,) → Semicolon (;)
+- Shift+Comma → Original comma
 
-## Support
-For questions, issues, or feature requests, please create an issue in the GitHub repository or contact jeronimo.s.santamaria@gmail.com
+<br>
+
+## 📜 License
+This project is licensed under the [GNU General Public License v3.0](LICENSE.md) with additional terms.
+
+<br>
+
+## 🤝 Contributing
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+<br>
+
+## 💬 Support
+- Create an issue in the GitHub repository
+- Contact: jeronimo.s.santamaria@gmail.com
+
+<br>
+
+***Made with ❤️ by Jerónimo Sánchez Santamaría***
