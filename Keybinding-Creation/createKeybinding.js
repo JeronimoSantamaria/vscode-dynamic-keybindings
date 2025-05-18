@@ -649,26 +649,21 @@ async function createKeybinding(redirectedKey, destinationText, activeProfilePar
       if (duplicateKey) {
         vscode.window.showErrorMessage(`A keybinding with key "${redirectedKey}" already exists for profile "${activeProfileParameter}"`);
         return;
-      }
-
-      // Template used to create new keybinding (key mapping) and add it to package.json
-      const template = `
-      {
-        "key": "${redirectedKey}", 
-        "command": "type",
-        "args": {
-          "text": "${destinationText}"
+      }      // Add the new keybinding to the array
+      const newKeybinding = {
+        key: redirectedKey,
+        command: "type",
+        args: {
+          text: destinationText
         },
-        "when": "dynamicKeybindingsEnabled && activeProfile == '${activeProfileParameter}'"
-      }`;
+        when: `dynamicKeybindingsEnabled && activeProfile == '${activeProfileParameter}'`
+      };
 
-      // Adds the template with the given variables to the package.json file
-      const lines = fileContent.split('\n');
-      // The line where the new keybinding will be inserted, being -5 after the last keybinding added
-      const insertLine = -5;
-      // Ensure that there is a comma before the new keybinding to keep the JSON valid
-      lines.splice(insertLine, 0, ',' + template);
-      fs.writeFileSync(keybindingsFilePath, lines.join('\n'), 'utf8');
+      // Add the new keybinding to the array
+      packageJson.contributes.keybindings.push(newKeybinding);
+
+      // Write back to file with proper formatting
+      fs.writeFileSync(keybindingsFilePath, JSON.stringify(packageJson, null, 2), 'utf8');
 
       // Save the changes to package.json
       vscode.commands.executeCommand('workbench.action.files.save').then(() => {
@@ -716,23 +711,18 @@ async function createCommand(commandKey, commandAction, activeProfileParameter) 
           'Yes', 'No'
         );
         if (result !== 'Yes') return;
-      }
+      }      // Add the new command binding to the array
+      const newCommand = {
+        key: commandKey,
+        command: commandAction,
+        when: `dynamicKeybindingsEnabled && activeProfile == '${activeProfileParameter}'`
+      };
 
-      // Template used to create new command and shortcut and add it to package.json
-      const template = `
-      {
-        "key": "${commandKey}",
-        "command": "${commandAction}",
-        "when": "dynamicKeybindingsEnabled && activeProfile == '${activeProfileParameter}'"
-      }`;
+      // Add the new command to the array
+      packageJson.contributes.keybindings.push(newCommand);
 
-      // Adds the template with the given variables to the package.json file
-      const lines = fileContent.split('\n');
-      // The line where the new keybinding will be inserted, being -5 after the last keybinding added
-      const insertLine = -5;
-      // Ensure that there is a comma before the new keybinding to keep the JSON valid
-      lines.splice(insertLine, 0, ',' + template);
-      fs.writeFileSync(keybindingsFilePath, lines.join('\n'), 'utf8');
+      // Write back to file with proper formatting
+      fs.writeFileSync(keybindingsFilePath, JSON.stringify(packageJson, null, 2), 'utf8');
 
       // Save the changes to package.json
       vscode.commands.executeCommand('workbench.action.files.save').then(() => {

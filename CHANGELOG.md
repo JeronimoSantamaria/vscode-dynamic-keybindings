@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Removed the maximum limit warning for pre-set profile commands as users now have direct control over keybinding management
 ### Fixed
 - Refresh the webview now closes the active editor and not just create a new window
+- After installed, when trying to create a new keybinding the extension gets broken due to incorrect JSON format, fixed by refactor the insert method for keybindings
 
 ## [0.11.1] - 2025-05-12
 ### Added
