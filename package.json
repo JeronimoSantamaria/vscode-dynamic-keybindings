@@ -1,6 +1,8 @@
 {
   "name": "dynamic-keybindings",
   "displayName": "Dynamic Keybindings",
+  "publisher": "jeronimosantamaria",
+  "icon": "dynamic-keybindings-icon.webp",
   "repository": {
     "type": "git",
     "url": "https://github.com/JeronimoSantamaria/vscode-dynamic-keybindings"

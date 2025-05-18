@@ -1,6 +1,5 @@
 .vscode/**
 .vscode-test/**
-Keybinding-Creation/**
 .gitignore
 vsc-extension-quickstart.md
 tsconfig.json
