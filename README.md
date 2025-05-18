@@ -80,8 +80,8 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 <br>
 
 ## 💬 Support
-- Create an issue in the GitHub repository
-- Contact: jeronimo.s.santamaria@gmail.com
+- Create an issue in the GitHub repository *(https://github.com/JeronimoSantamaria/vscode-dynamic-keybindings)*
+- Contact: *jeronimo.s.santamaria@gmail.com*
 
 <br>
 
