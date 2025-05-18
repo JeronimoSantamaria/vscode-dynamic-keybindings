@@ -1,6 +1,5 @@
 .vscode/**
 .vscode-test/**
-src/**
 Keybinding-Creation/**
 .gitignore
 vsc-extension-quickstart.md
