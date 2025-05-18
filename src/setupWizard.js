@@ -80,11 +80,11 @@ function getWizardContent() {
     <body>
         <div class="step active" id="step1">
             <h2>Welcome to Dynamic Keybindings!</h2>
-            <p>This wizard will help you to understand all the tools in the extension.</p>
+            <p>This wizard will help you understand all the tools in the extension.</p>
             <h3>Basic Concepts:</h3>
             <ul>
-                <li>Profiles: Sets of custom keybindings you can switch between</li>
-                <li>Key Mappings: Remap single keys to different characters or full texts</li>
+                <li>Profiles: Sets of custom keybindings you can switch between.</li>
+                <li>Key Mappings: Remap single keys to different characters or full texts.</li>
                 <div class="example-box-step1">
                     <h4>Example:</h4>
                     <p>Pressing <span class="shortcut">h</span> can be remapped to type <span class="shortcut">"Hello, World!"</span>.</p>
@@ -100,15 +100,16 @@ function getWizardContent() {
 
         <div class="step" id="step2">
             <h2>Profiles</h2>
-            <p>The extension comes with a "Default Profile" (ID=P0) that includes:</p>
+            <p>You start with a "Default Profile" (ID=P0) that includes:</p>
             <ul>
                 <li>Key Mappings for numbers and some other keys to their corresponding 'shift+' equivalent </li>
                 <li>Shift + Numbers return the original numbers</li>
             </ul>
-            <p>If you dont like it, you can always change it in our interface!</p>
+            <p>If you don't like it, you can always change it in our interface!</p>
+            <p>You can modify this profile through the interface at any time.</p>
 
             <h2>Managing Profiles</h2>
-            <p>You can:</p>
+            <p>Available actions:</p>
             <ul>
                 <li>Toggle extension: <span class="shortcut">Ctrl+Alt+Z</span></li>
                 <li>Switch profiles: <span class="shortcut">Ctrl+Shift+1-9</span></li>
@@ -123,7 +124,7 @@ function getWizardContent() {
 
         <div class="step" id="step3">
             <h2>Interface Overview</h2>
-            <p>The Dynamic Keybindings interface provides all the tools you need:</p>
+            <p>The Dynamic Keybindings interface offers you these tools:</p>
             <ul>
                 <b><li>Create and manage profiles</li></b>
                 <div class="example-box-step3">
@@ -133,7 +134,7 @@ function getWizardContent() {
                         <span style="background: var(--vscode-input-background); padding: 4px 8px; border: 1px solid var(--vscode-input-border);">Default Profile</span>
                         <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Delete</span>
                     </div>
-                    <p><em>Your existing profiles will be displayed like this. Clicking <span class="shortcut">Delete</span> will show a confirmation message. If you agree, the profile and all related keybindings will be deleted.</em></p>
+                    <p><em>Your keybindings will be displayed in this format. When you click <span class="shortcut">Delete</span>, you'll see a confirmation message.</em></p>
 
                     <br>
                     <div style="display: flex; gap: 10px; align-items: center;">
@@ -142,7 +143,7 @@ function getWizardContent() {
                     <div style="display: flex; gap: 10px; align-items: center;">
                         <span style="background: var(--vscode-button-background); color: var(--vscode-button-foreground); padding: 4px 8px;">Add Profile</span>    
                     </div>
-                    <p><em>To create a new profile, enter the name in the text field and click the button, your new profile will have impact after restart VS Code.</em></p>
+                    <p><em>To create a new profile, enter your desired name and click the button. The profile will be available after you restart VS Code.</em></p>
                 </div>
                 <br>
                 <b><li>Add key mappings</li></b>
@@ -251,15 +252,15 @@ function getWizardContent() {
 
         <div class="step" id="step4">
             <h2>Ready to Start!</h2>
-            <p>You're all set to use Dynamic Keybindings, but first I will give you some tips to make the most of the app:</p>
+            <p>Before you begin using Dynamic Keybindings, here are some helpful tips:</p>
             <ul>
-                <li>New profiles or keybindings will have impact after restarting VS Code.</li>
-                <li>Click the extension name in the wbview if you don't see your changes immediately in the interface, this will create another window with the new data loaded</li>
-                <li>You can also use key mapping to introduce long text through a command, for example <span class="shortcut">ctrl+shift+alt+c</span> to write "#include iostream \\n using namespace std; \\n\\n int main() {\\n\\n}", the usual C++ start</li>
-                <li>If you set an already existant native shortcut of VS Code it will execute the latest one, that means, if you have your profile active, it will execute your command, if the profile is not active, it will execute the native VSC command</li>
-                <li>If you want to modify the code by your own hand, you will find a guide of where and what is each component of the extension on the Github repository</li>
+                <li>Your new profiles and keybindings will take effect after restarting VS Code.</li>
+                <li>If changes don't appear immediately in the interface, click the extension name to refresh the view.</li>
+                <li>You can use key mapping for longer text snippets. For example, map <span class="shortcut">ctrl+shift+alt+c</span> to insert a C++ starter template.</li>
+                <li>When you set a keybinding that already exists in VS Code, the active profile's command takes precedence.</li>
+                <li>You can find detailed information about the extension's components in the GitHub repository.</li>
             </ul>
-            <p>Check the README.md file for detailed documentation.</p>
+            <p>For complete documentation, refer to the README.md file.</p>
         </div>
 
         <div class="navigation">
