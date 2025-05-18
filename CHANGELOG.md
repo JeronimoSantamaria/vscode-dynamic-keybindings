@@ -4,18 +4,21 @@ All notable changes to Dynamic Keybindings will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### [1.0] - 2025-05-18
+## [1.0.0] - 2025-05-18
 ### Added
 - Repository information into package.json
+### Fixed
+- After installed, when trying to create a new keybinding the extension gets broken due to incorrect JSON format, fixed by refactor the insert method for keybindings
 
-## [Unreleased]
+---
+
+## [Pre-release]
 
 ## [0.11.2] - 2025-05-12
 ### Changed 
 - Removed the maximum limit warning for pre-set profile commands as users now have direct control over keybinding management
 ### Fixed
 - Refresh the webview now closes the active editor and not just create a new window
-- After installed, when trying to create a new keybinding the extension gets broken due to incorrect JSON format, fixed by refactor the insert method for keybindings
 
 ## [0.11.1] - 2025-05-12
 ### Added
