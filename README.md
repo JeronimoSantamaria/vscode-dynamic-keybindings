@@ -27,7 +27,7 @@ Dynamic Keybindings is a Visual Studio Code extension that empowers developers t
 
 <br>
 
-## 🚀 Installation (Not Released yet)
+## 🚀 Installation 
 1. Install from VS Code marketplace
 2. Access through Command Palette (`Ctrl+Shift+P`)
 3. Type "Dynamic Keybindings: Open Webview"
