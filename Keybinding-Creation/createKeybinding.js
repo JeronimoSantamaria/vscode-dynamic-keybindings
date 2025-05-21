@@ -55,6 +55,7 @@ function activate(context) {
               deleteKeybinding(message, context);
               return;
             case 'reloadWebview':
+              vscode.commands.executeCommand('workbench.action.closeActiveEditor')
               vscode.commands.executeCommand('dynamic-keybindings.openWebview');
               return;
             case 'getNativeKeybindings':
@@ -210,10 +211,6 @@ function getWebviewContent() {
           <ul id="profileList"></ul>
           <input type="text" id="newProfileName" placeholder="New Profile Name">
           <button id="addProfileButton">Add Profile</button>
-
-          <div id="adMessage">
-            <p><strong>Warning:</strong> You have reach the maximum (9) of predefine activate profiles commands, if you add one more, you will have to define it manually in package.json</p>
-          </div>
         </div>
 
         <h2 class="section-header collapsed">Create Key Mapping</h2>
@@ -234,7 +231,7 @@ function getWebviewContent() {
         <div class="section-content">
           <p>Create new commands to specific occasions</p>
           <form id="commandForm">
-            <label for="commandKey">Key:</label>
+            <label for="commandKey">Shortcut:</label>
             <input type="text" id="commandKey" name="commandKey" required>
             <p class="example-text">Example: ctrl+alt+shift+a</p>
             <label for="commandAction">Command Action:</label>
@@ -250,7 +247,7 @@ function getWebviewContent() {
 
         <h2 class="section-header collapsed">View Profile Keybindings</h2>
         <div class="section-content">
-          <p>Check your profiles to ensure that is perfect for you</p>
+          <p>Check your profiles to ensure that they are perfect for you</p>
           <div>
             <select id="viewProfileSelect"></select>
             <button id="printKeybindings">Print Keybindings</button>
@@ -258,11 +255,11 @@ function getWebviewContent() {
           <div id="keybindingsList"></div>
         </div>
 
-        <h2 class="section-header collapsed">Native Keybindings</h2>
+        <h2 class="section-header collapsed">View Extension Keybindings</h2>
         <div class="section-content">
           <p>See and change how to toggle the extension and change profiles</p>
           <div>
-            <button id="printNativeKeybindings">View Native Keybindings</button>
+            <button id="printNativeKeybindings">View Extension Keybindings</button>
             <div id="nativeKeybindingsList"></div>
           </div>
           <br>
@@ -454,10 +451,6 @@ function getWebviewContent() {
           activeProfileSelect.innerHTML = '';
           const commandProfileSelect = document.getElementById('commandProfileParameter');
           commandProfileSelect.innerHTML = '';
-          
-          // Show/hide ad message based on profiles count
-          const adMessage = document.getElementById('adMessage');
-          adMessage.style.display = Object.keys(profiles).length >= 9 ? 'block' : 'none';
           
           for (const [id, name] of Object.entries(profiles)) {
             const li = document.createElement('li');
@@ -656,26 +649,21 @@ async function createKeybinding(redirectedKey, destinationText, activeProfilePar
       if (duplicateKey) {
         vscode.window.showErrorMessage(`A keybinding with key "${redirectedKey}" already exists for profile "${activeProfileParameter}"`);
         return;
-      }
-
-      // Template used to create new keybinding (key mapping) and add it to package.json
-      const template = `
-      {
-        "key": "${redirectedKey}", 
-        "command": "type",
-        "args": {
-          "text": "${destinationText}"
+      }      // Add the new keybinding to the array
+      const newKeybinding = {
+        key: redirectedKey,
+        command: "type",
+        args: {
+          text: destinationText
         },
-        "when": "dynamicKeybindingsEnabled && activeProfile == '${activeProfileParameter}'"
-      }`;
+        when: `dynamicKeybindingsEnabled && activeProfile == '${activeProfileParameter}'`
+      };
 
-      // Adds the template with the given variables to the package.json file
-      const lines = fileContent.split('\n');
-      // The line where the new keybinding will be inserted, being -5 after the last keybinding added
-      const insertLine = -5;
-      // Ensure that there is a comma before the new keybinding to keep the JSON valid
-      lines.splice(insertLine, 0, ',' + template);
-      fs.writeFileSync(keybindingsFilePath, lines.join('\n'), 'utf8');
+      // Add the new keybinding to the array
+      packageJson.contributes.keybindings.push(newKeybinding);
+
+      // Write back to file with proper formatting
+      fs.writeFileSync(keybindingsFilePath, JSON.stringify(packageJson, null, 2), 'utf8');
 
       // Save the changes to package.json
       vscode.commands.executeCommand('workbench.action.files.save').then(() => {
@@ -723,23 +711,18 @@ async function createCommand(commandKey, commandAction, activeProfileParameter) 
           'Yes', 'No'
         );
         if (result !== 'Yes') return;
-      }
+      }      // Add the new command binding to the array
+      const newCommand = {
+        key: commandKey,
+        command: commandAction,
+        when: `dynamicKeybindingsEnabled && activeProfile == '${activeProfileParameter}'`
+      };
 
-      // Template used to create new command and shortcut and add it to package.json
-      const template = `
-      {
-        "key": "${commandKey}",
-        "command": "${commandAction}",
-        "when": "dynamicKeybindingsEnabled && activeProfile == '${activeProfileParameter}'"
-      }`;
+      // Add the new command to the array
+      packageJson.contributes.keybindings.push(newCommand);
 
-      // Adds the template with the given variables to the package.json file
-      const lines = fileContent.split('\n');
-      // The line where the new keybinding will be inserted, being -5 after the last keybinding added
-      const insertLine = -5;
-      // Ensure that there is a comma before the new keybinding to keep the JSON valid
-      lines.splice(insertLine, 0, ',' + template);
-      fs.writeFileSync(keybindingsFilePath, lines.join('\n'), 'utf8');
+      // Write back to file with proper formatting
+      fs.writeFileSync(keybindingsFilePath, JSON.stringify(packageJson, null, 2), 'utf8');
 
       // Save the changes to package.json
       vscode.commands.executeCommand('workbench.action.files.save').then(() => {

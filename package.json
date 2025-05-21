@@ -1,8 +1,14 @@
 {
   "name": "dynamic-keybindings",
   "displayName": "Dynamic Keybindings",
+  "publisher": "jeronimo-sanchez-santamaria",
+  "icon": "dynamic-keybindings-icon.webp",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JeronimoSantamaria/vscode-dynamic-keybindings"
+  },
   "description": "Dynamic Keybindings is an extension for Visual Studio Code that allows you to create and manage dynamic keyboard shortcut profiles. With this tool, you can define custom groups of keybindings and activate or deactivate them using simple commands, adapting your development environment to your needs and improving your typing productivity.",
-  "version": "0.11.0",
+  "version": "1.0.0",
   "license": "GPL-3.0",
   "engines": {
     "vscode": "^1.97.0"
@@ -69,10 +75,6 @@
       }
     ],
     "keybindings": [
-      {
-        "key": "ctrl+.",
-        "command": "workbench.action.showCommands"
-      },
       {
         "key": "ctrl+alt+z",
         "command": "dynamic-keybindings.toggle"
@@ -280,56 +282,6 @@
           "text": ","
         },
         "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
-      },
-      {
-        "key": "ctrl+shift+,",
-        "command": "type",
-        "args": {
-          "text": "<"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
-      },
-      {
-        "key": "ctrl+shift+.",
-        "command": "type",
-        "args": {
-          "text": ">"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
-      },
-      {
-        "key": "2",
-        "command": "type",
-        "args": {
-          "text": "¯\\_(ツ)_/¯"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'P1'"
-      },
-      {
-        "key": "3",
-        "command": "type",
-        "args": {
-          "text": "Write in C++ with this profile!"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'P2'"
-      },
-      {
-        "key": "ctrl+alt+a",
-        "command": "workbench.action.showCommands",
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
-      },
-      {
-        "key": "ctrl+shift+d",
-        "command": "workbench.action.terminal.toggleTerminal",
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'P0'"
-      },
-      {
-        "key": "ctrl+shift+alt+d",
-        "command": "type",
-        "args": {
-          "text": "#include <iostream> \nusing namespace std; \n\nint main() {\n\n}"
-        },
-        "when": "dynamicKeybindingsEnabled && activeProfile == 'P2'"
       }
     ]
   },

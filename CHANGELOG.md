@@ -4,10 +4,31 @@ All notable changes to Dynamic Keybindings will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.0.0] - 2025-05-18
+### Added
+- Repository information into package.json
+- Publisher information into package.json
+- Extension Icon
+### Fixed
+- After installed, when trying to create a new keybinding the extension gets broken due to incorrect JSON format, fixed by refactor the insert method for keybindings
+
+---
+
+## [Pre-release]
+
+## [0.11.2] - 2025-05-12
+### Changed 
+- Removed the maximum limit warning for pre-set profile commands as users now have direct control over keybinding management
+### Fixed
+- Refresh the webview now closes the active editor and not just create a new window
+
+## [0.11.1] - 2025-05-12
+### Added
+- View Extension Keybindings section to the setup wizard
+### Fixed
+- Multiple format and typing errors
 
 ## [0.11.0] - 2025-05-08
-### Changed
 ### Changed
 - Reorganized webview interface with collapsible menus for improved user experience
 - Integrated h1 element into header section for better visual hierarchy
@@ -33,14 +54,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [0.9.1] - 2025-05-01
 ### Added
-- Explainatory texts after the example boxes for users to be clear about every function
+- Explanatory texts after the example boxes for users to be clear about every function
 
 ## [0.9.0] - 2025-04-30
 ### Added
 - Setup wizard for new users
 - Command to show setup wizard at any time
 ### Changed
-- Principal webview font to "Cascadia Code", on process to search a good font pre-instaled in all systems
+- Principal webview font to "Cascadia Code", in process to search for a good font pre-installed in all systems
 ### Fixed
 - Resolved an issue where the maximum pre-defined commands warning was triggered prematurely.
 
@@ -70,7 +91,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 - Support for dynamic commands with system actions (not the same as key mapping)
 - Create command function integrated with the WebView
-- Error handling to avoid duplicated redirected keys or commands in one profile
+- Error handling to avoid duplicate redirected keys or commands in one profile
 
 ## [0.6.3] - 2025-04-16
 ### Added
@@ -106,7 +127,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 - Max length of text fields in webview
 ### Fixed
-- Error of misstracked command
+- Error of mistracked command
 
 ## [0.5.0] - 2025-03-24
 ### Changed

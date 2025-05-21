@@ -2,5 +2,10 @@
 .vscode-test/**
 .gitignore
 vsc-extension-quickstart.md
-README.md
-CHANGELOG.md
+tsconfig.json
+.eslintrc.json
+.prettierrc*
+jsconfig.json
+out/**/*.map
+node_modules/**
+CONTRIBUTING.md

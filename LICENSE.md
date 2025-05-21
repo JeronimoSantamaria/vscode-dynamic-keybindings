@@ -18,7 +18,7 @@ GNU GENERAL PUBLIC LICENSE
 
  Additional Terms:
  - Any derivative works or modifications must provide clear attribution to 
-   the original author (Jerónimo Sánchez Santamaría).
+   the original author (Jerónimo Sánchez Santamaría) and a have redirection to the original github repository.
  - Commercial use of this software or its derivatives is strictly prohibited.
  - If you modify or extend this software, you must make your modifications 
    available under the same license terms.
